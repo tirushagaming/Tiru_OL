@@ -481,7 +481,7 @@
     }
     animateParticles();
 
-    // --- CHECKLIST & TRIGGER HANDLERS ---
+    // --- CHECKLIST & TRIGGER HANDLERS WITH LOCALSTORAGE ---
     document.addEventListener('DOMContentLoaded', () => {
         const checkboxes = document.querySelectorAll('.unit-item input[type="checkbox"]');
         const popup = document.getElementById('achievement-popup');
@@ -489,8 +489,20 @@
         const popupText = document.getElementById('achievement-text');
         let currentTimeout;
 
+        // --- LOAD SAVED STATES ON PAGE LOAD ---
+        checkboxes.forEach(box => {
+            const savedState = localStorage.getItem(box.id);
+            if (savedState === 'true') {
+                box.checked = true;
+            }
+        });
+
+        // --- HANDLE CLICKS AND SAVE NEW STATES ---
         checkboxes.forEach(box => {
             box.addEventListener('change', function() {
+                // Save state to localStorage
+                localStorage.setItem(this.id, this.checked);
+
                 if (this.checked) {
                     const unitLabelName = this.nextElementSibling.innerText;
                     const categoryBlock = this.closest('.section-block');
