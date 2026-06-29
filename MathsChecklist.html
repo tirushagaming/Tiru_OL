@@ -1,0 +1,542 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Math O/L Study Checklist</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700&display=swap" rel="stylesheet">
+    <style>
+        body {
+            font-family: 'Poppins', sans-serif;
+            background-color: #622fa6; /* Main outer purple background */
+            color: #ffffff;
+            max-width: 900px;
+            margin: 0 auto;
+            padding: 40px 20px;
+            position: relative;
+        }
+
+        .main-container {
+            background-color: #763cb4; /* Inner wrapper card background */
+            border-radius: 24px;
+            padding: 40px 30px;
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+            position: relative;
+            z-index: 2;
+        }
+
+        h1 {
+            text-align: center;
+            font-size: 2.2rem;
+            font-weight: 700;
+            margin-bottom: 10px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+        }
+
+        .subtitle {
+            text-align: center;
+            opacity: 0.8;
+            font-size: 0.95rem;
+            margin-bottom: 40px;
+        }
+
+        .section-block {
+            background-color: #864ec4; /* Subject block background */
+            border-radius: 18px;
+            padding: 25px;
+            margin-bottom: 25px;
+            box-shadow: inset 0 1px 3px rgba(255, 255, 255, 0.1);
+        }
+
+        h2 {
+            font-size: 1.3rem;
+            font-weight: 600;
+            margin-top: 0;
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .checklist {
+            list-style: none;
+            padding: 0;
+            margin: 0;
+        }
+
+        .unit-item {
+            display: flex;
+            align-items: center;
+            background-color: rgba(255, 255, 255, 0.06);
+            margin: 10px 0;
+            padding: 14px 18px;
+            border-radius: 30px;
+            transition: all 0.25s ease;
+            border: 1px solid rgba(255, 255, 255, 0.03);
+        }
+
+        .unit-item:hover {
+            background-color: rgba(255, 255, 255, 0.12);
+            transform: translateX(4px);
+        }
+
+        /* Modernized Checkbox configuration */
+        .unit-item input[type="checkbox"] {
+            -webkit-appearance: none;
+            appearance: none;
+            width: 22px;
+            height: 22px;
+            border: 2px solid #ff8452; /* Orange border */
+            border-radius: 50%;
+            margin-right: 15px;
+            cursor: pointer;
+            display: grid;
+            place-content: center;
+            transition: all 0.2s ease;
+            flex-shrink: 0;
+        }
+
+        .unit-item input[type="checkbox"]::before {
+            content: "";
+            width: 10px;
+            height: 10px;
+            border-radius: 50%;
+            transform: scale(0);
+            transition: 0.2s transform ease-in-out;
+            background-color: #ffffff;
+        }
+
+        /* Checked Active State */
+        .unit-item input[type="checkbox"]:checked {
+            background-color: #38d147; /* Green active background */
+            border-color: #38d147;
+        }
+
+        .unit-item input[type="checkbox"]:checked::before {
+            transform: scale(1);
+        }
+
+        .unit-item label {
+            font-size: 0.95rem;
+            font-weight: 400;
+            cursor: pointer;
+            width: 100%;
+            -webkit-user-select: none;
+            user-select: none;
+            transition: all 0.2s ease;
+        }
+
+        .unit-item input[type="checkbox"]:checked + label {
+            color: rgba(255, 255, 255, 0.5);
+            text-decoration: line-through;
+        }
+
+        /* --- IMMERSIVE CELEBRATION POP-UP STYLING --- */
+        .achievement-toast {
+            position: fixed;
+            top: -150px;
+            left: 50%;
+            transform: translateX(-50%) scale(0.9);
+            background-color: rgba(18, 11, 30, 0.95); /* Deep sleek card background */
+            border: 3px solid #38d147; /* Vibrant glow green border */
+            box-shadow: 0 0 30px rgba(56, 209, 71, 0.4), 0 15px 40px rgba(0, 0, 0, 0.6);
+            color: #ffffff;
+            padding: 20px 40px;
+            border-radius: 60px;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            gap: 25px;
+            pointer-events: none;
+            opacity: 0;
+            transition: transform 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), top 0.5s cubic-bezier(0.175, 0.885, 0.32, 1.275), opacity 0.3s ease;
+        }
+
+        /* Triggered active animation state */
+        .achievement-toast.active {
+            top: 40px;
+            opacity: 1;
+            transform: translateX(-50%) scale(1);
+        }
+
+        .toast-content-wrapper {
+            text-align: center;
+        }
+
+        .toast-title {
+            color: #38d147; /* Neon green unlock status title */
+            font-weight: 700;
+            font-size: 1.2rem;
+            letter-spacing: 1px;
+            margin-bottom: 2px;
+            text-shadow: 0 0 10px rgba(56, 209, 71, 0.5);
+        }
+
+        #achievement-text {
+            font-size: 0.95rem;
+            font-weight: 400;
+            color: #e0e0e0;
+        }
+
+        #achievement-text span {
+            color: #ff8452; /* Highlights specific unit details in theme orange */
+            font-weight: 600;
+        }
+
+        /* Big animated party popper styling */
+        .emoji-bounce {
+            font-size: 2.8rem;
+            display: inline-block;
+            animation: infinite alternate;
+        }
+
+        .achievement-toast.active .emoji-bounce-left {
+            animation: emojiPopLeft 0.6s infinite alternate ease-in-out;
+        }
+
+        .achievement-toast.active .emoji-bounce-right {
+            animation: emojiPopRight 0.6s infinite alternate ease-in-out;
+        }
+
+        @keyframes emojiPopLeft {
+            0% { transform: scale(1) rotate(-15deg); }
+            100% { transform: scale(1.2) rotate(10deg); }
+        }
+
+        @keyframes emojiPopRight {
+            0% { transform: scale(1) rotate(15deg); }
+            100% { transform: scale(1.2) rotate(-10deg); }
+        }
+
+        /* Full Screen Background Particle Canvas */
+        #confetti-canvas {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100vw;
+            height: 100vh;
+            z-index: 9998;
+            pointer-events: none;
+        }
+    </style>
+</head>
+<body>
+
+<canvas id="confetti-canvas"></canvas>
+
+<div id="achievement-popup" class="achievement-toast">
+    <span class="emoji-bounce emoji-bounce-left">🎉</span>
+    <div class="toast-content-wrapper">
+        <div id="toast-title-display" class="toast-title">UNIT COMPLETED!</div>
+        <div id="achievement-text">You just completed a step forward!</div>
+    </div>
+    <span class="emoji-bounce emoji-bounce-right">🎉</span>
+</div>
+
+<div class="main-container">
+
+    <h1>🎓 Math O/L Study Checklist</h1>
+    <div class="subtitle">Your Step-by-Step Path to Master the Syllabus</div>
+
+    <div class="section-block">
+        <h2>🔢 1. Numbers (9 Units)</h2>
+        <ul class="checklist">
+            <li class="unit-item"><input type="checkbox" id="num1"><label for="num1">Unit 1: Real Numbers (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="num2"><label for="num2">Unit 2: Fractions (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="num3"><label for="num3">Unit 3: Square Roots (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="num4"><label for="num4">Unit 4: Inverse Proportions (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="num5"><label for="num5">Unit 5: Percentages I (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="num6"><label for="num6">Unit 6: Percentages II (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="num7"><label for="num7">Unit 7: Taxes & Financial Math (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="num8"><label for="num8">Unit 8: Share Market (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="num9"><label for="num9">Unit 9: Progressions (Arithmetic & Geometric) (Grade 10 & 11)</label></li>
+        </ul>
+    </div>
+
+    <div class="section-block">
+        <h2>➗ 2. Algebra (13 Units)</h2>
+        <ul class="checklist">
+            <li class="unit-item"><input type="checkbox" id="alg1"><label for="alg1">Unit 1: Binomial Expressions I (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="alg2"><label for="alg2">Unit 2: Factors of Quadratic Expressions (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="alg3"><label for="alg3">Unit 3: LCM of Algebraic Expressions (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="alg4"><label for="alg4">Unit 4: Algebraic Fractions I (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="alg5"><label for="alg5">Unit 5: Linear Equations (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="alg6"><label for="alg6">Unit 6: Simultaneous Linear Equations (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="alg7"><label for="alg7">Unit 7: Formulae (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="alg8"><label for="alg8">Unit 8: Linear Inequalities I (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="alg9"><label for="alg9">Unit 9: Binomial Expressions II (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="alg10"><label for="alg10">Unit 10: Algebraic Fractions II (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="alg11"><label for="alg11">Unit 11: Quadratic Equations (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="alg12"><label for="alg12">Unit 12: Linear Inequalities II (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="alg13"><label for="alg13">Unit 13: Matrices (Grade 11)</label></li>
+        </ul>
+    </div>
+
+    <div class="section-block">
+        <h2>📈 3. Logarithm (1 Unit)</h2>
+        <ul class="checklist">
+            <li class="unit-item"><input type="checkbox" id="log1"><label for="log1">Unit 1: Indices & Logarithms (Grade 10 & 11)</label></li>
+        </ul>
+    </div>
+
+    <div class="section-block">
+        <h2>📊 4. Graphs (3 Units)</h2>
+        <ul class="checklist">
+            <li class="unit-item"><input type="checkbox" id="grp1"><label for="grp1">Unit 1: Straight Line Graphs (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="grp2"><label for="grp2">Unit 2: Quadratic Graphs I (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="grp3"><label for="grp3">Unit 3: Quadratic Graphs II & Roots (Grade 11)</label></li>
+        </ul>
+    </div>
+
+    <div class="section-block">
+        <h2>📐 5. Geometry (13 Units)</h2>
+        <ul class="checklist">
+            <li class="unit-item"><input type="checkbox" id="geo1"><label for="geo1">Unit 1: Triangles I (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="geo2"><label for="geo2">Unit 2: Congruence of Triangles (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="geo3"><label for="geo3">Unit 3: Triangles II (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="geo4"><label for="geo4">Unit 4: Midpoint Theorem (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="geo5"><label for="geo5">Unit 5: Parallelograms I (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="geo6"><label for="geo6">Unit 6: Parallelograms II (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="geo7"><label for="geo7">Unit 7: Areas of Plane Figures (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="geo8"><label for="geo8">Unit 8: Pythagoras' Theorem (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="geo9"><label for="geo9">Unit 9: Equiangular & Similar Triangles (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="geo10"><label for="geo10">Unit 10: Chords of a Circle (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="geo11"><label for="geo11">Unit 11: Angles in a Circle (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="geo12"><label for="geo12">Unit 12: Cyclic Quadrilaterals (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="geo13"><label for="geo13">Unit 13: Tangents of a Circle (Grade 11)</label></li>
+        </ul>
+    </div>
+
+    <div class="section-block">
+        <h2>🧭 6. Trigonometry (1 Unit)</h2>
+        <ul class="checklist">
+            <li class="unit-item"><input type="checkbox" id="tri1"><label for="tri1">Unit 1: Trigonometric Ratios (Grade 11)</label></li>
+        </ul>
+    </div>
+
+    <div class="section-block">
+        <h2>📏 7. Measurement (8 Units)</h2>
+        <ul class="checklist">
+            <li class="unit-item"><input type="checkbox" id="meas1"><label for="meas1">Unit 1: Perimeter (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="meas2"><label for="meas2">Unit 2: Area (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="meas3"><label for="meas3">Unit 3: Rate (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="meas4"><label for="meas4">Unit 4: Scale Diagrams & Bearings (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="meas5"><label for="meas5">Unit 5: Geometric Constructions I (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="meas6"><label for="meas6">Unit 6: Geometric Constructions II (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="meas7"><label for="meas7">Unit 7: Surface Area of Solids (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="meas8"><label for="meas8">Unit 8: Volume of Solids (Grade 11)</label></li>
+        </ul>
+    </div>
+
+    <div class="section-block">
+        <h2>🔲 8. Sets and Venn Diagrams (2 Units)</h2>
+        <ul class="checklist">
+            <li class="unit-item"><input type="checkbox" id="set1"><label for="set1">Unit 1: Introduction to Sets (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="set2"><label for="set2">Unit 2: Advanced Sets (Grade 11)</label></li>
+        </ul>
+    </div>
+
+    <div class="section-block">
+        <h2>📉 9. Statistics and Probability (7 Units)</h2>
+        <ul class="checklist">
+            <li class="unit-item"><input type="checkbox" id="stat1"><label for="stat1">Unit 1: Data Representation I (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="stat2"><label for="stat2">Unit 2: Frequency Distributions & Histograms (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="stat3"><label for="stat3">Unit 3: Measures of Central Tendency I (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="stat4"><label for="stat4">Unit 4: Measures of Central Tendency II (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="stat5"><label for="stat5">Unit 5: Measures of Dispersion (Grade 11)</label></li>
+            <li class="unit-item"><input type="checkbox" id="stat6"><label for="stat6">Unit 6: Probability I (Grade 10)</label></li>
+            <li class="unit-item"><input type="checkbox" id="stat7"><label for="stat7">Unit 7: Probability II (Grade 11)</label></li>
+        </ul>
+    </div>
+
+</div>
+
+<script>
+    // --- NATIVE AUDIO SYNTHESIZERS ---
+    
+    // 1. Standard short chime for individual units
+    function playUnitChime() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const ctx = new AudioContext();
+            
+            let osc1 = ctx.createOscillator();
+            let gain1 = ctx.createGain();
+            osc1.type = 'sine';
+            osc1.frequency.setValueAtTime(587.33, ctx.currentTime); // D5
+            gain1.gain.setValueAtTime(0.08, ctx.currentTime);
+            gain1.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.25);
+            osc1.connect(gain1);
+            gain1.connect(ctx.destination);
+            osc1.start();
+            osc1.stop(ctx.currentTime + 0.25);
+            
+            let osc2 = ctx.createOscillator();
+            let gain2 = ctx.createGain();
+            osc2.type = 'sine';
+            osc2.frequency.setValueAtTime(880.00, ctx.currentTime + 0.08); // A5
+            gain2.gain.setValueAtTime(0.08, ctx.currentTime + 0.08);
+            gain2.gain.exponentialRampToValueAtTime(0.001, ctx.currentTime + 0.45);
+            osc2.connect(gain2);
+            gain2.connect(ctx.destination);
+            osc2.start(ctx.currentTime + 0.08);
+            osc2.stop(ctx.currentTime + 0.45);
+        } catch (e) {}
+    }
+
+    // 2. Grand, long-lasting fanfare for completing a whole category
+    function playCategoryFanfare() {
+        try {
+            const AudioContext = window.AudioContext || window.webkitAudioContext;
+            if (!AudioContext) return;
+            const ctx = new AudioContext();
+
+            // Notes for a triumphant major arpeggio (C5 -> E5 -> G5 -> C6)
+            const notes = [523.25, 659.25, 783.99, 1046.50];
+            
+            notes.forEach((freq, index) => {
+                let osc = ctx.createOscillator();
+                let gain = ctx.createGain();
+                
+                osc.type = 'triangle'; // Richer, warmer tone for big achievement
+                osc.frequency.setValueAtTime(freq, ctx.currentTime + (index * 0.12));
+                
+                gain.gain.setValueAtTime(0.1, ctx.currentTime + (index * 0.12));
+                // Hold the final highest note much longer (2.2 seconds)
+                const holdDuration = (index === notes.length - 1) ? 2.2 : 0.4;
+                gain.gain.exponentialRampToValueAtTime(0.0001, ctx.currentTime + (index * 0.12) + holdDuration);
+                
+                osc.connect(gain);
+                gain.connect(ctx.destination);
+                
+                osc.start(ctx.currentTime + (index * 0.12));
+                osc.stop(ctx.currentTime + (index * 0.12) + holdDuration);
+            });
+        } catch (e) {}
+    }
+
+    // --- CANVAS CONFIGURATION FOR HIGH PERFORMANCE PARTICLES ---
+    const canvas = document.getElementById('confetti-canvas');
+    const ctx = canvas.getContext('2d');
+    let particles = [];
+
+    function resizeCanvas() {
+        canvas.width = window.innerWidth;
+        canvas.height = window.innerHeight;
+    }
+    window.addEventListener('resize', resizeCanvas);
+    resizeCanvas();
+
+    class ConfettiParticle {
+        constructor() {
+            this.x = window.innerWidth / 2;
+            this.y = -20; 
+            this.radius = Math.random() * 5 + 4;
+            this.color = ['#38d147', '#ff8452', '#ffeb3b', '#2196f3', '#e91e63'][Math.floor(Math.random() * 5)];
+            this.vx = (Math.random() - 0.5) * 28; 
+            this.vy = Math.random() * 14 + 4;    
+            this.rotation = Math.random() * 360;
+            this.rotationSpeed = (Math.random() - 0.5) * 10;
+            this.opacity = 1;
+        }
+        update() {
+            this.x += this.vx;
+            this.y += this.vy;
+            this.vy += 0.2; 
+            this.vx *= 0.98; 
+            this.rotation += this.rotationSpeed;
+            if (this.y > window.innerHeight - 50) {
+                this.opacity -= 0.02; 
+            }
+        }
+        draw() {
+            ctx.save();
+            ctx.translate(this.x, this.y);
+            ctx.rotate((this.rotation * Math.PI) / 180);
+            ctx.fillStyle = this.color;
+            ctx.globalAlpha = this.opacity;
+            ctx.fillRect(-this.radius, -this.radius, this.radius * 2, this.radius * 1.5);
+            ctx.restore();
+        }
+    }
+
+    function spawnConfettiBurst(amount = 85) {
+        for (let i = 0; i < amount; i++) {
+            particles.push(new ConfettiParticle());
+        }
+    }
+
+    function animateParticles() {
+        ctx.clearRect(0, 0, canvas.width, canvas.height);
+        particles = particles.filter(p => p.opacity > 0 && p.y < window.innerHeight);
+        particles.forEach(p => {
+            p.update();
+            p.draw();
+        });
+        requestAnimationFrame(animateParticles);
+    }
+    animateParticles();
+
+    // --- CHECKLIST & TRIGGER HANDLERS ---
+    document.addEventListener('DOMContentLoaded', () => {
+        const checkboxes = document.querySelectorAll('.unit-item input[type="checkbox"]');
+        const popup = document.getElementById('achievement-popup');
+        const popupTitle = document.getElementById('toast-title-display');
+        const popupText = document.getElementById('achievement-text');
+        let currentTimeout;
+
+        checkboxes.forEach(box => {
+            box.addEventListener('change', function() {
+                if (this.checked) {
+                    const unitLabelName = this.nextElementSibling.innerText;
+                    const categoryBlock = this.closest('.section-block');
+                    const categoryTitle = categoryBlock.querySelector('h2').innerText;
+                    
+                    // Check if all checkboxes in THIS specific section are now checked
+                    const allInSection = categoryBlock.querySelectorAll('input[type="checkbox"]');
+                    const checkedInSection = categoryBlock.querySelectorAll('input[type="checkbox"]:checked');
+                    const isCategoryFinished = (allInSection.length === checkedInSection.length);
+
+                    if (isCategoryFinished) {
+                        // --- CATEGORY COMPLETED BEHAVIOR ---
+                        popupTitle.innerText = "🏆 CATEGORY COMPLETED!";
+                        popupTitle.style.color = "#ffeb3b"; // Golden yellow for big achievement
+                        popupText.innerHTML = `Incredible! You finished all of <span>${categoryTitle}</span>`;
+                        
+                        playCategoryFanfare();
+                        spawnConfettiBurst(170); // Double particle explosion
+                    } else {
+                        // --- SINGLE UNIT COMPLETED BEHAVIOR ---
+                        popupTitle.innerText = "UNIT COMPLETED!";
+                        popupTitle.style.color = "#38d147"; // Standard neon green
+                        popupText.innerHTML = `You just mastered <span>${unitLabelName}</span>`;
+                        
+                        playUnitChime();
+                        spawnConfettiBurst(85);
+                    }
+
+                    // Reset and trigger pop-up animation
+                    clearTimeout(currentTimeout);
+                    popup.classList.remove('active');
+                    
+                    setTimeout(() => {
+                        popup.classList.add('active');
+                    }, 30);
+
+                    // Keep category celebrations on screen slightly longer (5s vs 4s)
+                    const displayDuration = isCategoryFinished ? 5000 : 4000;
+                    currentTimeout = setTimeout(() => {
+                        popup.classList.remove('active');
+                    }, displayDuration);
+                }
+            });
+        });
+    });
+</script>
+
+</body>
+</html>
