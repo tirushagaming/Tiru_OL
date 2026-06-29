@@ -59,6 +59,7 @@
 
         .card {
             background: rgba(255, 255, 255, 0.12);
+            -webkit-backdrop-filter: blur(15px);
             backdrop-filter: blur(15px);
             border: 1px solid rgba(255, 255, 255, .2);
             border-radius: 25px;
@@ -148,6 +149,16 @@
             color: #222;
         }
 
+        .credits-text {
+            text-align: center;
+            margin-bottom: 20px;
+        }
+
+        .back-link {
+            text-align: left;
+            margin-bottom: 35px;
+        }
+
         footer {
             text-align: center;
             margin-top: 40px;
@@ -185,16 +196,16 @@
 
         <div class="card">
             <h2 class="section-title">Map Marking</h2>
-            <p style="text-align:center;margin-bottom:20px;">All Credits To @ePapere</p>
+            <p class="credits-text">All Credits To @ePapere</p>
 
             <div class="subject">
                 <h3>Sri Lankan Map!</h3>
 
                 <div class="btn-group">
-                <a class="btn" href="https://youtu.be/zlKZ9MSOlW0?list=PL2EXFTSbPMGUN6BmWJ4Pek48hqT2C0ltd" target="_blank">
+                <a class="btn" href="https://youtu.be/zlKZ9MSOlW0?list=PL2EXFTSbPMGUN6BmWJ4Pek48hqT2C0ltd" target="_blank" rel="noopener noreferrer">
                     <button class="primary">Map Marking Video</button>
                 </a>
-                <a class="btn" href="https://drive.google.com/file/d/1gwclb54AcRKKdHecmhvHLCQbZ9FjqM58/view" target="_blank">
+                <a class="btn" href="https://drive.google.com/file/d/1gwclb54AcRKKdHecmhvHLCQbZ9FjqM58/view" target="_blank" rel="noopener noreferrer">
                         <button class="success">Map Marking Practice PDF</button>
                     </a>
 
@@ -205,10 +216,10 @@
                 <h3>World Map!</h3>
 
                 <div class="btn-group">
-                <a class="btn" href="https://youtu.be/Gpz4mShnvcw" target="_blank">
+                <a class="btn" href="https://youtu.be/Gpz4mShnvcw" target="_blank" rel="noopener noreferrer">
                     <button class="primary">Map Marking Video</button>
                 </a>
-                <a class="btn" href="https://pastpapers.wiki/wp-content/uploads/2022/03/Empty-Asia-Europe-Map-for-Practice-Ol-History-Map-Marking-in-GCE-OL-Examination-768x576.jpg" target="_blank">
+                <a class="btn" href="https://pastpapers.wiki/wp-content/uploads/2022/03/Empty-Asia-Europe-Map-for-Practice-Ol-History-Map-Marking-in-GCE-OL-Examination-768x576.jpg" target="_blank" rel="noopener noreferrer">
                         <button class="success">Map Marking Practice PDF</button>
                     </a>
 
@@ -219,7 +230,7 @@
 
         </div>
 
-        <div style="text-align:left;margin-bottom:35px;">
+        <div class="back-link">
         <a href="./index.html" target="_self" class="btn">
             <button class="special">Go Back!</button>
         </a>
