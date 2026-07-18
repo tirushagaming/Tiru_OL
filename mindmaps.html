@@ -1,0 +1,284 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>O/L Science - Biology Mind Maps</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@400;600;700;800&display=swap" rel="family">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: 'Poppins', sans-serif;
+        }
+
+        body {
+            background: linear-gradient(135deg, #6e1aed 0%, #a855f7 50%, #4c1d95 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 40px 20px;
+            color: #ffffff;
+        }
+
+        .main-container {
+            width: 100%;
+            max-width: 950px;
+            background: rgba(255, 255, 255, 0.12);
+            backdrop-filter: blur(20px);
+            -webkit-backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            border-radius: 32px;
+            padding: 40px;
+            box-shadow: 0 25px 50px -12px rgba(0, 0, 0, 0.4);
+        }
+
+        .header-section {
+            text-align: center;
+            margin-bottom: 40px;
+        }
+
+        .main-title {
+            font-size: 2.8rem;
+            font-weight: 800;
+            letter-spacing: -0.5px;
+            margin-bottom: 8px;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 12px;
+            text-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+        }
+
+        .subtitle {
+            font-size: 1.15rem;
+            color: #e9d5ff;
+            font-weight: 600;
+            opacity: 0.95;
+        }
+
+        .grade-container {
+            margin-bottom: 35px;
+        }
+
+        .grade-title {
+            font-size: 1.6rem;
+            font-weight: 700;
+            margin-bottom: 20px;
+            padding-bottom: 8px;
+            border-bottom: 2px solid rgba(255, 255, 255, 0.15);
+            color: #f3e8ff;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        .lessons-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
+            gap: 20px;
+        }
+
+        .lesson-card {
+            background: rgba(15, 5, 30, 0.35);
+            border: 1px solid rgba(255, 255, 255, 0.08);
+            border-radius: 20px;
+            padding: 24px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            transition: transform 0.3s cubic-bezier(0.25, 0.8, 0.25, 1), box-shadow 0.3s ease;
+        }
+
+        .lesson-card:hover {
+            transform: translateY(-4px);
+            box-shadow: 0 12px 24px rgba(0, 0, 0, 0.25);
+            background: rgba(15, 5, 30, 0.45);
+        }
+
+        .unit-tag {
+            font-size: 0.8rem;
+            text-transform: uppercase;
+            letter-spacing: 1px;
+            color: #d8b4fe;
+            font-weight: 700;
+            margin-bottom: 6px;
+        }
+
+        .unit-name {
+            font-size: 1.1rem;
+            font-weight: 600;
+            line-height: 1.4;
+            color: #ffffff;
+            margin-bottom: 20px;
+            min-height: 50px;
+        }
+
+        .mindmap-btn {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            width: 100%;
+            padding: 12px 20px;
+            background: linear-gradient(135deg, #ff007f 0%, #ff5e62 100%);
+            color: #ffffff;
+            text-decoration: none;
+            font-weight: 600;
+            font-size: 0.95rem;
+            border-radius: 50px;
+            border: none;
+            cursor: pointer;
+            box-shadow: 0 4px 15px rgba(255, 0, 127, 0.3);
+            transition: all 0.4s cubic-bezier(0.4, 0, 0.2, 1);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .mindmap-btn:hover {
+            background: linear-gradient(135deg, #ff5e62 0%, #ff007f 100%);
+            box-shadow: 0 6px 20px rgba(255, 0, 127, 0.6);
+            transform: scale(1.02);
+            opacity: 0.95;
+        }
+
+        @media (max-width: 768px) {
+            .main-container {
+                padding: 24px;
+            }
+            .main-title {
+                font-size: 2.1rem;
+            }
+            .lessons-grid {
+                grid-template-columns: 1fr;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="main-container">
+        <div class="header-section">
+            <h1 class="main-title">📚 O/L Science Revision</h1>
+            <p class="subtitle">All Biology Unit Mind Maps • Organized In One Place!</p>
+        </div>
+
+        <div class="grade-container">
+            <h2 class="grade-title">🎓 Grade 10 Lessons</h2>
+            <div class="lessons-grid">
+                
+                <div class="lesson-card">
+                    <div>
+                        <div class="unit-tag">Unit 01</div>
+                        <h3 class="unit-name">Chemical Basis of Life</h3>
+                    </div>
+                    <a href="https://notebooklm.google.com/notebook/33799267-8a0c-4c8d-9cce-8bbb811daaa7/artifact/77754fc7-9a55-46a3-87a7-8b8de40cbe82?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" rel="noopener noreferrer" class="mindmap-btn">
+                        <span>🧠 Study Mind Map</span>
+                    </a>
+                </div>
+
+                <div class="lesson-card">
+                    <div>
+                        <div class="unit-tag">Unit 06</div>
+                        <h3 class="unit-name">Structure and Functions of Tissues & Cells</h3>
+                    </div>
+                    <a href="https://notebooklm.google.com/notebook/33799267-8a0c-4c8d-9cce-8bbb811daaa7/artifact/74d5c13c-5d23-40f8-bde9-cd488fed2aca?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" rel="noopener noreferrer" class="mindmap-btn">
+                        <span>🧠 Study Mind Map</span>
+                    </a>
+                </div>
+
+                <div class="lesson-card">
+                    <div>
+                        <div class="unit-tag">Unit 08</div>
+                        <h3 class="unit-name">Characteristics & Classification of Organisms</h3>
+                    </div>
+                    <a href="https://notebooklm.google.com/notebook/33799267-8a0c-4c8d-9cce-8bbb811daaa7/artifact/01fb8da7-c374-4a48-b24d-ba1010d0a0e6?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" rel="noopener noreferrer" class="mindmap-btn">
+                        <span>🧠 Study Mind Map</span>
+                    </a>
+                </div>
+
+                <div class="lesson-card">
+                    <div>
+                        <div class="unit-tag">Unit 13</div>
+                        <h3 class="unit-name">The Biosphere & Ecosystems</h3>
+                    </div>
+                    <a href="https://notebooklm.google.com/notebook/33799267-8a0c-4c8d-9cce-8bbb811daaa7/artifact/68d9293d-a2a7-43a6-bf6a-4142f27ebdf3?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" rel="noopener noreferrer" class="mindmap-btn">
+                        <span>🧠 Study Mind Map</span>
+                    </a>
+                </div>
+
+                <div class="lesson-card">
+                    <div>
+                        <div class="unit-tag">Unit 14</div>
+                        <h3 class="unit-name">Natural Resources of the Biosphere</h3>
+                    </div>
+                    <a href="https://notebooklm.google.com/notebook/33799267-8a0c-4c8d-9cce-8bbb811daaa7/artifact/cd63b284-6247-4b1c-80d6-94b155ded30e?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" rel="noopener noreferrer" class="mindmap-btn">
+                        <span>🧠 Study Mind Map</span>
+                    </a>
+                </div>
+
+                <div class="lesson-card">
+                    <div>
+                        <div class="unit-tag">Unit 20</div>
+                        <h3 class="unit-name">Organisms & Diseases Overview</h3>
+                    </div>
+                    <a href="https://notebooklm.google.com/notebook/33799267-8a0c-4c8d-9cce-8bbb811daaa7/artifact/9829f958-64b2-4178-82ce-3da7997da33c?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" rel="noopener noreferrer" class="mindmap-btn">
+                        <span>🧠 Study Mind Map</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+
+        <div class="grade-container" style="margin-bottom: 0;">
+            <h2 class="grade-title">🎓 Grade 11 Lessons</h2>
+            <div class="lessons-grid">
+                
+                <div class="lesson-card">
+                    <div>
+                        <div class="unit-tag">Unit 01</div>
+                        <h3 class="unit-name">Structure and Functions of Living Tissues</h3>
+                    </div>
+                    <a href="https://notebooklm.google.com/notebook/33799267-8a0c-4c8d-9cce-8bbb811daaa7/artifact/9829f958-64b2-4178-82ce-3da7997da33c?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" rel="noopener noreferrer" class="mindmap-btn">
+                        <span>🧠 Study Mind Map</span>
+                    </a>
+                </div>
+
+                <div class="lesson-card">
+                    <div>
+                        <div class="unit-tag">Unit 02</div>
+                        <h3 class="unit-name">Photosynthesis in Plants</h3>
+                    </div>
+                    <a href="https://notebooklm.google.com/notebook/33799267-8a0c-4c8d-9cce-8bbb811daaa7/artifact/0fc916a7-c099-4932-bb69-f3067c8b002e?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" rel="noopener noreferrer" class="mindmap-btn">
+                        <span>🧠 Study Mind Map</span>
+                    </a>
+                </div>
+
+                <div class="lesson-card">
+                    <div>
+                        <div class="unit-tag">Unit 06</div>
+                        <h3 class="unit-name">Biological Processes in Human Body</h3>
+                    </div>
+                    <a href="https://notebooklm.google.com/notebook/33799267-8a0c-4c8d-9cce-8bbb811daaa7/artifact/1a9df30f-6136-4370-8fb1-75e306cb4bfd?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" rel="noopener noreferrer" class="mindmap-btn">
+                        <span>🧠 Study Mind Map</span>
+                    </a>
+                </div>
+
+                <div class="lesson-card">
+                    <div>
+                        <div class="unit-tag">Unit 15</div>
+                        <h3 class="unit-name">Biosphere Equilibrium & Human Impacts</h3>
+                    </div>
+                    <a href="https://notebooklm.google.com/notebook/33799267-8a0c-4c8d-9cce-8bbb811daaa7/artifact/5a50fb9a-6fc3-44f1-a53c-765a4a5f2146?utm_source=nlm_web_share&utm_medium=google_oo&utm_campaign=art_share_1&utm_content=&utm_smc=nlm_web_share_google_oo_art_share_1_" target="_blank" rel="noopener noreferrer" class="mindmap-btn">
+                        <span>🧠 Study Mind Map</span>
+                    </a>
+                </div>
+
+            </div>
+        </div>
+    </div>
+
+</body>
+</html>
