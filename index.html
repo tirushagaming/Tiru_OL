@@ -1,0 +1,112 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>My Website</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    * { margin: 0; padding: 0; box-sizing: border-box; }
+    body, html { width: 100%; height: 100%; overflow: hidden; font-family: sans-serif; }
+
+    /* Fullscreen content frame */
+    #content-frame {
+      width: 100%;
+      height: 100%;
+      border: none;
+    }
+
+    /* Top-Left Mute/Unmute Button */
+    .mute-btn {
+      position: fixed;
+      top: 15px;
+      left: 15px;
+      z-index: 999999;
+      background: rgba(20, 20, 20, 0.85);
+      color: #ffffff;
+      border: 1px solid rgba(255, 255, 255, 0.2);
+      padding: 8px 14px;
+      border-radius: 20px;
+      cursor: pointer;
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 0.85rem;
+      box-shadow: 0 4px 10px rgba(0,0,0,0.3);
+      backdrop-filter: blur(5px);
+    }
+    .mute-btn:hover { background: #000; color: #00d2ff; }
+
+    /* INVISIBLE CLICK OVERLAY (Catches the first user click anywhere) */
+    #click-overlay {
+      position: fixed;
+      top: 0;
+      left: 0;
+      width: 100vw;
+      height: 100vh;
+      z-index: 99998;
+      background: transparent;
+      cursor: pointer;
+    }
+  </style>
+</head>
+<body>
+
+  <div id="click-overlay"></div>
+
+  <button class="mute-btn" id="muteBtn">
+    <i class="fa-solid fa-volume-high" id="speakerIcon"></i>
+    <span id="muteText">Sound On</span>
+  </button>
+
+  <iframe src="home.html" id="content-frame"></iframe>
+
+  <audio id="bgMusic" loop preload="auto">
+    <source src="MCmusic.mp3" type="audio/mpeg">
+  </audio>
+
+  <script>
+    const audio = document.getElementById('bgMusic');
+    const muteBtn = document.getElementById('muteBtn');
+    const speakerIcon = document.getElementById('speakerIcon');
+    const muteText = document.getElementById('muteText');
+    const overlay = document.getElementById('click-overlay');
+
+    audio.volume = 0.7; // 70% Volume
+
+    // 1. FIRST CLICK ANYWHERE STARTS MUSIC & REMOVES OVERLAY
+    overlay.addEventListener('click', () => {
+      audio.play().then(() => {
+        console.log("Music started successfully!");
+      }).catch(err => {
+        console.log("Audio play error:", err);
+      });
+
+      // Remove overlay so user can click links inside home.html normally
+      overlay.style.display = 'none';
+    });
+
+    // 2. MUTE / UNMUTE TOGGLE
+    muteBtn.addEventListener('click', (e) => {
+      e.stopPropagation();
+      
+      // If music wasn't started yet, start it on mute button click
+      if (audio.paused) {
+        audio.play();
+        overlay.style.display = 'none';
+      }
+
+      if (audio.muted) {
+        audio.muted = false;
+        speakerIcon.className = 'fa-solid fa-volume-high';
+        muteText.textContent = 'Sound On';
+      } else {
+        audio.muted = true;
+        speakerIcon.className = 'fa-solid fa-volume-xmark';
+        muteText.textContent = 'Muted';
+      }
+    });
+  </script>
+
+</body>
+</html>
