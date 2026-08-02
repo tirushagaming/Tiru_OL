@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>TNS Students Handy!</title>
+  <title>My Website</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -60,50 +60,53 @@
 
     audio.volume = 0.7; // Default volume (70%)
 
-    // Helper function to safely play music
+    // Helper function to play audio safely on interaction
     function playAudio() {
       if (audio.paused) {
         audio.play().then(() => {
-          console.log("Music started!");
+          console.log("Music started successfully!");
         }).catch(err => {
           console.log("Waiting for user interaction...", err);
         });
       }
     }
 
-    // 1. Listen for clicks on the main window / frame padding
-    window.addEventListener('click', playAudio, { once: true });
+    // 1. LISTEN ON MAIN WINDOW (Click, Keydown, Scroll)
+    ['click', 'keydown', 'wheel', 'scroll', 'touchstart'].forEach(eventType => {
+      window.addEventListener(eventType, playAudio, { once: true });
+    });
 
-    // 2. Attach click & scroll listeners inside the iframe as soon as pages load
+    // 2. ATTACH LISTENERS INSIDE THE IFRAME CONTENT
     function attachIframeListeners() {
       try {
-        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
-        
-        // Trigger music on first click inside iframe page
-        iframeDoc.addEventListener('click', playAudio, { once: true });
-        
-        // Trigger music on touch / tap on mobile devices
-        iframeDoc.addEventListener('touchstart', playAudio, { once: true });
+        const iframeWindow = iframe.contentWindow;
+        const iframeDoc = iframe.contentDocument || iframeWindow.document;
+
+        // Triggers music on Click, Keypress, Mouse Wheel, Touch, or Scroll inside iframe
+        ['click', 'keydown', 'wheel', 'scroll', 'touchstart', 'touchmove'].forEach(eventType => {
+          iframeDoc.addEventListener(eventType, playAudio, { once: true });
+          iframeWindow.addEventListener(eventType, playAudio, { once: true });
+        });
       } catch (e) {
         console.log("Iframe listener attach warning:", e);
       }
     }
 
-    // Attach listener when iframe loads initially and on page transitions
+    // Attach listeners when iframe finishes loading a page
     iframe.addEventListener('load', attachIframeListeners);
 
-    // 3. Fallback: Detect when user focuses/clicks into the iframe window
+    // 3. FALLBACK: WINDOW FOCUS / BLUR DETECTOR
     window.addEventListener('blur', () => {
       if (document.activeElement === iframe) {
         playAudio();
       }
     });
 
-    // 4. MUTE / UNMUTE TOGGLE
+    // 4. MUTE / UNMUTE TOGGLE BUTTON
     muteBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       
-      // If user clicks mute button before anything else, start music
+      // If user clicks mute button first, ensure audio starts
       if (audio.paused) {
         playAudio();
       }
