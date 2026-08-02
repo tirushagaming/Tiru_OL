@@ -3,7 +3,7 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Students Handy! @Tiru</title>
+  <title>TNS Students Handy!</title>
   <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
   <style>
     * { margin: 0; padding: 0; box-sizing: border-box; }
@@ -36,22 +36,9 @@
       backdrop-filter: blur(5px);
     }
     .mute-btn:hover { background: #000; color: #00d2ff; }
-
-    /* OVERLAY THAT ALLOWS SCROLLING */
-    #click-overlay {
-      position: fixed;
-      top: 0;
-      left: 0;
-      width: 100vw;
-      height: 100vh;
-      z-index: 99998;
-      background: transparent;
-    }
   </style>
 </head>
 <body>
-
-  <div id="click-overlay"></div>
 
   <button class="mute-btn" id="muteBtn">
     <i class="fa-solid fa-volume-high" id="speakerIcon"></i>
@@ -69,36 +56,56 @@
     const muteBtn = document.getElementById('muteBtn');
     const speakerIcon = document.getElementById('speakerIcon');
     const muteText = document.getElementById('muteText');
-    const overlay = document.getElementById('click-overlay');
+    const iframe = document.getElementById('content-frame');
 
-    audio.volume = 0.7; // 70% Volume
+    audio.volume = 0.7; // Default volume (70%)
 
-    function startMusicAndUnlock() {
+    // Helper function to safely play music
+    function playAudio() {
       if (audio.paused) {
-        audio.play().catch(err => console.log(err));
-      }
-      // Remove overlay immediately so page scrolling & clicking work normally
-      if (overlay) {
-        overlay.remove();
+        audio.play().then(() => {
+          console.log("Music started!");
+        }).catch(err => {
+          console.log("Waiting for user interaction...", err);
+        });
       }
     }
 
-    // Trigger on first click, touch, or key press
-    window.addEventListener('click', startMusicAndUnlock, { once: true });
-    window.addEventListener('touchstart', startMusicAndUnlock, { once: true });
-    window.addEventListener('keydown', startMusicAndUnlock, { once: true });
+    // 1. Listen for clicks on the main window / frame padding
+    window.addEventListener('click', playAudio, { once: true });
 
-    // Also forward wheel/scroll events directly to iframe if overlay is active
-    window.addEventListener('wheel', () => {
-      startMusicAndUnlock();
-    }, { once: true });
+    // 2. Attach click & scroll listeners inside the iframe as soon as pages load
+    function attachIframeListeners() {
+      try {
+        const iframeDoc = iframe.contentDocument || iframe.contentWindow.document;
+        
+        // Trigger music on first click inside iframe page
+        iframeDoc.addEventListener('click', playAudio, { once: true });
+        
+        // Trigger music on touch / tap on mobile devices
+        iframeDoc.addEventListener('touchstart', playAudio, { once: true });
+      } catch (e) {
+        console.log("Iframe listener attach warning:", e);
+      }
+    }
 
-    // MUTE / UNMUTE TOGGLE
+    // Attach listener when iframe loads initially and on page transitions
+    iframe.addEventListener('load', attachIframeListeners);
+
+    // 3. Fallback: Detect when user focuses/clicks into the iframe window
+    window.addEventListener('blur', () => {
+      if (document.activeElement === iframe) {
+        playAudio();
+      }
+    });
+
+    // 4. MUTE / UNMUTE TOGGLE
     muteBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       
+      // If user clicks mute button before anything else, start music
       if (audio.paused) {
-        startMusicAndUnlock();
+        playAudio();
       }
 
       if (audio.muted) {
