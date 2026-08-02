@@ -37,7 +37,7 @@
     }
     .mute-btn:hover { background: #000; color: #00d2ff; }
 
-    /* INVISIBLE CLICK OVERLAY (Catches the first user click anywhere) */
+    /* OVERLAY THAT ALLOWS SCROLLING */
     #click-overlay {
       position: fixed;
       top: 0;
@@ -46,7 +46,6 @@
       height: 100vh;
       z-index: 99998;
       background: transparent;
-      cursor: pointer;
     }
   </style>
 </head>
@@ -74,26 +73,32 @@
 
     audio.volume = 0.7; // 70% Volume
 
-    // 1. FIRST CLICK ANYWHERE STARTS MUSIC & REMOVES OVERLAY
-    overlay.addEventListener('click', () => {
-      audio.play().then(() => {
-        console.log("Music started successfully!");
-      }).catch(err => {
-        console.log("Audio play error:", err);
-      });
+    function startMusicAndUnlock() {
+      if (audio.paused) {
+        audio.play().catch(err => console.log(err));
+      }
+      // Remove overlay immediately so page scrolling & clicking work normally
+      if (overlay) {
+        overlay.remove();
+      }
+    }
 
-      // Remove overlay so user can click links inside home.html normally
-      overlay.style.display = 'none';
-    });
+    // Trigger on first click, touch, or key press
+    window.addEventListener('click', startMusicAndUnlock, { once: true });
+    window.addEventListener('touchstart', startMusicAndUnlock, { once: true });
+    window.addEventListener('keydown', startMusicAndUnlock, { once: true });
 
-    // 2. MUTE / UNMUTE TOGGLE
+    // Also forward wheel/scroll events directly to iframe if overlay is active
+    window.addEventListener('wheel', () => {
+      startMusicAndUnlock();
+    }, { once: true });
+
+    // MUTE / UNMUTE TOGGLE
     muteBtn.addEventListener('click', (e) => {
       e.stopPropagation();
       
-      // If music wasn't started yet, start it on mute button click
       if (audio.paused) {
-        audio.play();
-        overlay.style.display = 'none';
+        startMusicAndUnlock();
       }
 
       if (audio.muted) {
