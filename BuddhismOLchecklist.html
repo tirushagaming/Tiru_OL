@@ -1,0 +1,1539 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Buddhism O/L Master Checklist</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800&display=swap" rel="stylesheet">
+<style>
+    :root {
+        --primary: #6366f1;
+        --primary-hover: #4f46e5;
+        --secondary: #0ea5e9;
+        --success: #10b981;
+        --danger: #ef4444;
+        
+        /* Glassmorphism Variables */
+        --glass-bg: rgba(255, 255, 255, 0.55);
+        --glass-border: rgba(255, 255, 255, 0.8);
+        --glass-shadow: 0 8px 32px 0 rgba(31, 38, 135, 0.07);
+        --glass-hover: rgba(255, 255, 255, 0.75);
+        
+        --text-main: #1e293b;
+        --text-muted: #64748b;
+        --radius: 20px;
+    }
+
+    * {
+        box-sizing: border-box;
+        margin: 0;
+        padding: 0;
+    }
+
+    body {
+        font-family: 'Inter', system-ui, -apple-system, sans-serif;
+        background: linear-gradient(135deg, #e2e8f0 0%, #f8fafc 100%);
+        background-attachment: fixed;
+        color: var(--text-main);
+        line-height: 1.6;
+        min-height: 100vh;
+        overflow-x: hidden;
+    }
+
+    /* Ambient Background Shapes for Glass Effect */
+    .bg-shape {
+        position: fixed;
+        border-radius: 50%;
+        filter: blur(80px);
+        z-index: -1;
+        animation: float 12s infinite alternate ease-in-out;
+        opacity: 0.6;
+    }
+    .shape1 { width: 400px; height: 400px; background: rgba(99, 102, 241, 0.4); top: -100px; left: -100px; }
+    .shape2 { width: 500px; height: 500px; background: rgba(14, 165, 233, 0.4); bottom: -150px; right: -100px; animation-delay: -5s; }
+    .shape3 { width: 300px; height: 300px; background: rgba(236, 72, 153, 0.3); top: 30%; left: 40%; animation-duration: 15s; }
+
+    @keyframes float {
+        0% { transform: translate(0, 0) scale(1); }
+        100% { transform: translate(40px, 60px) scale(1.1); }
+    }
+
+    .container {
+        width: min(1180px, 92%);
+        margin: auto;
+        position: relative;
+        z-index: 1;
+    }
+
+    /* GLASS UTILITY */
+    .glass {
+        background: var(--glass-bg);
+        backdrop-filter: blur(16px);
+        -webkit-backdrop-filter: blur(16px);
+        border: 1px solid var(--glass-border);
+        box-shadow: var(--glass-shadow);
+        border-radius: var(--radius);
+    }
+
+    /* HEADER */
+    header {
+        padding: 45px 0 30px;
+    }
+
+    .hero {
+        background: linear-gradient(135deg, rgba(255, 255, 255, 0.7) 0%, rgba(255, 255, 255, 0.4) 100%);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.9);
+        border-radius: 28px;
+        padding: 50px;
+        box-shadow: 0 20px 50px rgba(0, 0, 0, 0.05), inset 0 0 0 1px rgba(255,255,255,0.5);
+        position: relative;
+        overflow: hidden;
+    }
+
+    .hero-content {
+        position: relative;
+        z-index: 2;
+    }
+
+    .badge {
+        display: inline-block;
+        padding: 8px 16px;
+        background: rgba(99, 102, 241, 0.1);
+        border: 1px solid rgba(99, 102, 241, 0.2);
+        color: var(--primary);
+        border-radius: 999px;
+        font-size: 13px;
+        font-weight: 700;
+        margin-bottom: 18px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .hero h1 {
+        font-size: clamp(34px, 5vw, 56px);
+        line-height: 1.15;
+        margin-bottom: 15px;
+        letter-spacing: -1.5px;
+        font-weight: 800;
+        background: linear-gradient(135deg, #1e293b, #4f46e5);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .hero p {
+        max-width: 760px;
+        color: var(--text-muted);
+        font-size: 17px;
+        font-weight: 500;
+    }
+
+    /* DASHBOARD */
+    .dashboard {
+        display: grid;
+        grid-template-columns: 1.4fr 1fr 1fr;
+        gap: 20px;
+        margin: 25px 0;
+    }
+
+    .stat {
+        padding: 26px;
+        transition: transform 0.3s ease;
+    }
+    
+    .stat:hover {
+        transform: translateY(-3px);
+    }
+
+    .stat-label {
+        color: var(--text-muted);
+        font-size: 14px;
+        font-weight: 600;
+        margin-bottom: 8px;
+        text-transform: uppercase;
+        letter-spacing: 0.5px;
+    }
+
+    .stat-value {
+        font-size: 36px;
+        font-weight: 800;
+        color: var(--text-main);
+    }
+
+    .progress-container {
+        margin-top: 16px;
+        height: 10px;
+        background: rgba(255, 255, 255, 0.6);
+        border-radius: 99px;
+        overflow: hidden;
+        box-shadow: inset 0 2px 4px rgba(0,0,0,0.05);
+    }
+
+    .progress-bar {
+        height: 100%;
+        width: 0%;
+        background: linear-gradient(90deg, var(--primary), var(--secondary));
+        border-radius: 99px;
+        transition: width 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+        box-shadow: 0 0 10px rgba(99, 102, 241, 0.4);
+    }
+
+    /* CONTROLS */
+    .controls {
+        display: flex;
+        gap: 12px;
+        flex-wrap: wrap;
+        margin: 35px 0;
+    }
+
+    .search {
+        flex: 1;
+        min-width: 250px;
+        padding: 14px 20px;
+        border: 1px solid var(--glass-border);
+        border-radius: 14px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        font-size: 15px;
+        outline: none;
+        color: var(--text-main);
+        box-shadow: var(--glass-shadow);
+        transition: all 0.3s ease;
+    }
+
+    .search:focus {
+        border-color: var(--primary);
+        background: rgba(255,255,255,0.9);
+        box-shadow: 0 0 0 4px rgba(99, 102, 241, 0.15);
+    }
+    
+    .search::placeholder {
+        color: #94a3b8;
+    }
+
+    button {
+        border: none;
+        cursor: pointer;
+        font: inherit;
+        font-weight: 600;
+    }
+
+    .filter-btn,
+    .action-btn {
+        padding: 14px 20px;
+        border-radius: 14px;
+        background: var(--glass-bg);
+        backdrop-filter: blur(10px);
+        border: 1px solid var(--glass-border);
+        color: var(--text-main);
+        box-shadow: var(--glass-shadow);
+        transition: all 0.3s ease;
+    }
+
+    .filter-btn:hover,
+    .action-btn:hover {
+        background: var(--glass-hover);
+        transform: translateY(-2px);
+    }
+
+    .filter-btn.active {
+        background: var(--primary);
+        color: white;
+        border-color: var(--primary);
+        box-shadow: 0 8px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .danger {
+        color: var(--danger);
+        background: rgba(239, 68, 68, 0.05);
+        border-color: rgba(239, 68, 68, 0.2);
+    }
+    .danger:hover {
+        background: rgba(239, 68, 68, 0.1);
+        color: var(--danger);
+    }
+
+    /* SECTION TITLE */
+    .grade-title {
+        margin: 55px 0 25px;
+        display: flex;
+        align-items: center;
+        gap: 18px;
+    }
+
+    .grade-number {
+        width: 54px;
+        height: 54px;
+        display: grid;
+        place-items: center;
+        border-radius: 16px;
+        background: linear-gradient(135deg, var(--primary), var(--secondary));
+        color: white;
+        font-size: 20px;
+        font-weight: 800;
+        box-shadow: 0 10px 20px rgba(99, 102, 241, 0.3);
+    }
+
+    .grade-title h2 {
+        font-size: 30px;
+        font-weight: 800;
+        letter-spacing: -0.5px;
+    }
+
+    .grade-title p {
+        color: var(--text-muted);
+        font-size: 15px;
+        font-weight: 500;
+        margin-top: 4px;
+    }
+
+    /* UNIT CARDS */
+    .unit {
+        margin-bottom: 20px;
+        transition: all 0.3s ease;
+    }
+
+    .unit-header {
+        display: flex;
+        align-items: center;
+        gap: 18px;
+        padding: 22px 26px;
+        cursor: pointer;
+        user-select: none;
+        background: rgba(255, 255, 255, 0.3);
+        border-radius: var(--radius);
+        transition: background 0.2s;
+    }
+    
+    .unit-header:hover {
+        background: rgba(255, 255, 255, 0.5);
+    }
+
+    .unit-number {
+        min-width: 46px;
+        height: 46px;
+        border-radius: 14px;
+        background: rgba(255, 255, 255, 0.8);
+        color: var(--primary);
+        display: grid;
+        place-items: center;
+        font-weight: 800;
+        font-size: 16px;
+        box-shadow: 0 4px 10px rgba(0,0,0,0.03);
+    }
+
+    .unit-title {
+        flex: 1;
+    }
+
+    .unit-title h3 {
+        font-size: 18px;
+        font-weight: 700;
+        line-height: 1.35;
+    }
+
+    .unit-progress {
+        font-size: 14px;
+        font-weight: 600;
+        color: var(--text-muted);
+        background: rgba(255, 255, 255, 0.6);
+        padding: 6px 12px;
+        border-radius: 99px;
+    }
+
+    .arrow {
+        font-size: 22px;
+        color: var(--text-muted);
+        transition: transform 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+    }
+
+    .unit.open .arrow {
+        transform: rotate(180deg);
+    }
+
+    .unit-body {
+        display: none;
+        padding: 10px 26px 26px;
+        border-top: 1px solid rgba(255, 255, 255, 0.4);
+    }
+
+    .unit.open .unit-body {
+        display: block;
+        animation: fadeIn 0.4s ease;
+    }
+    
+    @keyframes fadeIn {
+        from { opacity: 0; transform: translateY(-10px); }
+        to { opacity: 1; transform: translateY(0); }
+    }
+
+    /* CHECKLIST */
+    .checklist {
+        list-style: none;
+        padding-top: 14px;
+    }
+
+    .checklist li {
+        margin-bottom: 8px;
+    }
+
+    .check-item {
+        display: flex;
+        align-items: flex-start;
+        gap: 14px;
+        padding: 12px 14px;
+        border-radius: 12px;
+        transition: all 0.2s ease;
+    }
+
+    .check-item:hover {
+        background: rgba(255, 255, 255, 0.7);
+        transform: translateX(4px);
+    }
+
+    .check-item input {
+        width: 20px;
+        height: 20px;
+        margin-top: 2px;
+        accent-color: var(--primary);
+        cursor: pointer;
+        flex-shrink: 0;
+        border-radius: 6px;
+    }
+
+    .check-item label {
+        cursor: pointer;
+        font-size: 15.5px;
+        font-weight: 500;
+        flex: 1;
+        transition: all 0.2s;
+    }
+
+    .check-item input:checked + label {
+        text-decoration: line-through;
+        color: #94a3b8;
+    }
+
+    .priority {
+        margin-left: 12px;
+        font-size: 11px;
+        font-weight: 800;
+        color: var(--danger);
+        background: rgba(239, 68, 68, 0.1);
+        padding: 4px 8px;
+        border-radius: 6px;
+        letter-spacing: 0.5px;
+    }
+
+    /* CORE */
+    .core-section {
+        margin-top: 60px;
+    }
+
+    .core-card {
+        padding: 30px;
+        margin-bottom: 22px;
+    }
+
+    .core-card h3 {
+        margin-bottom: 18px;
+        font-size: 20px;
+        font-weight: 800;
+        display: flex;
+        align-items: center;
+        gap: 10px;
+    }
+
+    .core-list {
+        display: grid;
+        grid-template-columns: repeat(2, 1fr);
+        gap: 8px 25px;
+    }
+
+    /* FINAL TEST */
+    .final-test {
+        margin: 60px 0;
+        background: rgba(15, 23, 42, 0.75);
+        backdrop-filter: blur(24px);
+        -webkit-backdrop-filter: blur(24px);
+        border: 1px solid rgba(255, 255, 255, 0.1);
+        color: white;
+        border-radius: 28px;
+        padding: 40px;
+        box-shadow: 0 30px 60px rgba(15,23,42,0.3);
+    }
+
+    .final-test h2 {
+        margin-bottom: 10px;
+        font-size: 28px;
+        font-weight: 800;
+        background: linear-gradient(135deg, #fcd34d, #f59e0b);
+        -webkit-background-clip: text;
+        -webkit-text-fill-color: transparent;
+    }
+
+    .final-test h3 {
+        color: #e2e8f0;
+        margin-bottom: 15px;
+        font-size: 18px;
+        border-bottom: 1px solid rgba(255,255,255,0.1);
+        padding-bottom: 8px;
+    }
+
+    .final-test .check-item:hover {
+        background: rgba(255,255,255,0.08);
+        transform: translateX(4px);
+    }
+
+    .final-test .check-item label {
+        color: #f1f5f9;
+    }
+
+    .final-test .check-item input:checked + label {
+        color: #64748b;
+    }
+
+    /* NOTICE */
+    .notice {
+        background: rgba(254, 243, 199, 0.6);
+        backdrop-filter: blur(10px);
+        border: 1px solid rgba(252, 211, 77, 0.6);
+        color: #92400e;
+        padding: 20px 24px;
+        border-radius: 16px;
+        margin: 30px 0;
+        font-size: 15px;
+        font-weight: 500;
+        display: flex;
+        gap: 12px;
+        align-items: center;
+        box-shadow: 0 4px 15px rgba(251, 191, 36, 0.1);
+    }
+
+    footer {
+        text-align: center;
+        color: var(--text-muted);
+        padding: 40px 0 60px;
+        font-size: 14px;
+        font-weight: 500;
+    }
+
+    /* MOBILE */
+    @media(max-width: 800px) {
+        .dashboard {
+            grid-template-columns: 1fr;
+            gap: 15px;
+        }
+
+        .hero {
+            padding: 35px 25px;
+        }
+
+        .core-list {
+            grid-template-columns: 1fr;
+        }
+
+        .unit-header {
+            padding: 18px 20px;
+        }
+
+        .unit-body {
+            padding: 0 20px 20px;
+        }
+        
+        .controls {
+            flex-direction: column;
+        }
+        
+        .search {
+            width: 100%;
+        }
+    }
+</style>
+</head>
+
+<body>
+
+<!-- Background Ambient Shapes -->
+<div class="bg-shape shape1"></div>
+<div class="bg-shape shape2"></div>
+<div class="bg-shape shape3"></div>
+
+<div class="container">
+
+<header>
+    <div class="hero glass">
+        <div class="hero-content">
+            <span class="badge">🇱🇰 Sri Lankan G.C.E. O/L</span>
+
+            <h1>Buddhism O/L<br>Master Checklist</h1>
+
+            <p>
+                Grade 10 + Grade 11 complete study tracker.
+                Learn, revise, practise and master every important area
+                before your Ordinary Level examination.
+            </p>
+        </div>
+    </div>
+</header>
+
+
+<!-- DASHBOARD -->
+<section class="dashboard">
+
+    <div class="stat glass">
+        <div class="stat-label">Overall Progress</div>
+        <div class="stat-value" id="overallPercent">0%</div>
+
+        <div class="progress-container">
+            <div class="progress-bar" id="overallBar"></div>
+        </div>
+    </div>
+
+    <div class="stat glass">
+        <div class="stat-label">Completed</div>
+        <div class="stat-value" id="completedCount">0</div>
+    </div>
+
+    <div class="stat glass">
+        <div class="stat-label">Remaining</div>
+        <div class="stat-value" id="remainingCount">0</div>
+    </div>
+
+</section>
+
+
+<!-- CONTROLS -->
+<div class="controls">
+
+    <input
+        type="search"
+        class="search"
+        id="searchBox"
+        placeholder="🔎 Search lessons, topics or terms..."
+    >
+
+    <button class="filter-btn active" data-filter="all">All</button>
+    <button class="filter-btn" data-filter="remaining">Remaining</button>
+    <button class="filter-btn" data-filter="completed">Completed</button>
+    <button class="action-btn" onclick="expandAll()">Expand All</button>
+    <button class="action-btn" onclick="collapseAll()">Collapse All</button>
+    <button class="action-btn danger" onclick="resetProgress()">Reset</button>
+
+</div>
+
+
+<div class="notice glass">
+    <div>💡 <strong>Study rule:</strong>
+    Tick a topic only when you can explain it without looking at the textbook,
+    give an example, and answer an exam question about it.</div>
+</div>
+
+
+<!-- ========================================================= -->
+<!-- GRADE 10 -->
+<!-- ========================================================= -->
+
+<div class="grade-title">
+    <div class="grade-number">10</div>
+    <div>
+        <h2>Grade 10 Buddhism</h2>
+        <p>Build your foundation before moving to Grade 11.</p>
+    </div>
+</div>
+
+<!-- UNIT 1 -->
+<div class="unit glass">
+<div class="unit-header">
+    <div class="unit-number">01</div>
+    <div class="unit-title">
+        <h3>Siddhartha Bodhisattva / Early Life</h3>
+    </div>
+    <div class="unit-progress">0 / 14</div>
+    <div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Birth of Prince Siddhartha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Family background</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>King Suddhodana</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Queen Māyādevī</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Prince Siddhartha's childhood</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Education and accomplishments</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Marriage to Yasodharā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Birth of Rāhula</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Four Sights</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Great Renunciation</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Search for enlightenment</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Important events in Siddhartha's life</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Lessons that can be learned from his life</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Major events leading to enlightenment</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- UNIT 2 -->
+<div class="unit glass">
+<div class="unit-header">
+    <div class="unit-number">02</div>
+    <div class="unit-title">
+        <h3>The Three Jewels — Triple Gem</h3>
+    </div>
+    <div class="unit-progress">0 / 11</div>
+    <div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Buddha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Dhamma</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Saṅgha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Meaning of taking refuge</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Qualities of the Buddha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Qualities of the Dhamma</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Qualities of the Saṅgha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Significance of the Triple Gem</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Buddha Vandana</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Dhamma Vandana</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Saṅgha Vandana</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- UNIT 3 -->
+<div class="unit glass">
+<div class="unit-header">
+    <div class="unit-number">03</div>
+    <div class="unit-title">
+        <h3>Maha Saṅgha</h3>
+    </div>
+    <div class="unit-progress">0 / 7</div>
+    <div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Meaning of Saṅgha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Importance of the Maha Saṅgha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Duties of monks</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Relationship between lay devotees and Saṅgha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Respecting the Maha Saṅgha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Proper conduct towards monks</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Saṅgha's contribution to the Buddha Sāsana</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- UNIT 4 -->
+<div class="unit glass">
+<div class="unit-header">
+    <div class="unit-number">04</div>
+    <div class="unit-title">
+        <h3>Meritorious Deeds / Kusala</h3>
+    </div>
+    <div class="unit-progress">0 / 11</div>
+    <div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Meaning of kusala</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Akusala</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Puñña</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Meritorious actions</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Dāna</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Sīla</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Bhāvanā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Respecting worthy persons</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Helping others</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Sharing merits</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Rejoicing in others' merits</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- UNIT 5 -->
+<div class="unit glass">
+<div class="unit-header">
+    <div class="unit-number">05</div>
+    <div class="unit-title">
+        <h3>Insight / Wisdom</h3>
+    </div>
+    <div class="unit-progress">0 / 8</div>
+    <div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Meaning of paññā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Wisdom according to Buddhism</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Seeing reality correctly</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Difference between ordinary knowledge and wisdom</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Causes of suffering</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Impermanence</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Unsatisfactoriness</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Non-self</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- UNIT 6 -->
+<div class="unit glass">
+<div class="unit-header">
+    <div class="unit-number">06</div>
+    <div class="unit-title">
+        <h3>Great Buddhist Personalities</h3>
+    </div>
+    <div class="unit-progress">0 / 6</div>
+    <div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Important disciples</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Their qualities</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Their contributions</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Exemplary Buddhist characters</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Lessons from their lives</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Important female and lay disciples</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- UNIT 7 -->
+<div class="unit glass">
+<div class="unit-header">
+    <div class="unit-number">07</div>
+    <div class="unit-title">
+        <h3>Buddhist Art and Culture</h3>
+    </div>
+    <div class="unit-progress">0 / 10</div>
+    <div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Development of Buddhist art</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Buddhist architecture</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Stūpas</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Image houses</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Bodhi trees</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Ancient Buddhist monuments</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Buddhist paintings</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Buddhist sculptures</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Sri Lankan Buddhist heritage</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Importance of preserving Buddhist heritage</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- UNIT 8 -->
+<div class="unit glass">
+<div class="unit-header">
+    <div class="unit-number">08</div>
+    <div class="unit-title">
+        <h3>Dhamma Councils / Saṅgāyanā</h3>
+    </div>
+    <div class="unit-progress">0 / 8</div>
+    <div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>First Buddhist Council</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Second Buddhist Council</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Third Buddhist Council</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Fourth Buddhist Council</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Reasons for holding councils</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Important personalities</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Places where councils were held</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Important outcomes and preservation of teachings</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- UNIT 9 -->
+<div class="unit glass">
+<div class="unit-header">
+    <div class="unit-number">09</div>
+    <div class="unit-title">
+        <h3>Buddhist Ethics</h3>
+    </div>
+    <div class="unit-progress">0 / 10</div>
+    <div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Five Precepts</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Ten wholesome actions</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Ten unwholesome actions</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Right conduct</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Right speech</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Right thoughts</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Respect for parents</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Respect for teachers</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Respect for elders</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Helping society</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- UNIT 10 -->
+<div class="unit glass">
+<div class="unit-header">
+    <div class="unit-number">10</div>
+    <div class="unit-title">
+        <h3>Food / Daily Life</h3>
+    </div>
+    <div class="unit-progress">0 / 6</div>
+    <div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Buddhist attitude towards food</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Moderation</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Avoiding excessive consumption</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Healthy habits</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Mindfulness while eating</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Relationship between food and life</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- ========================================================= -->
+<!-- GRADE 11 -->
+<!-- ========================================================= -->
+
+<div class="grade-title">
+<div class="grade-number">11</div>
+<div>
+<h2>Grade 11 Buddhism</h2>
+<p>Advanced concepts and high-value O/L areas.</p>
+</div>
+</div>
+
+<!-- G11 UNIT 1 -->
+<div class="unit glass">
+<div class="unit-header">
+<div class="unit-number">01</div>
+<div class="unit-title">
+<h3>Kamma — I <span class="priority">HIGH PRIORITY</span></h3>
+</div>
+<div class="unit-progress">0 / 10</div>
+<div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Meaning of Kamma</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Kamma and action</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Intention / Cetanā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Mental, verbal and physical actions</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Kusala Kamma</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Akusala Kamma</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Results of Kamma</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Relationship between Kamma and Vipāka</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Good actions and consequences</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Bad actions and consequences</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- G11 UNIT 2 -->
+<div class="unit glass">
+<div class="unit-header">
+<div class="unit-number">02</div>
+<div class="unit-title">
+<h3>Kamma — II <span class="priority">HIGH PRIORITY</span></h3>
+</div>
+<div class="unit-progress">0 / 10</div>
+<div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Types of Kamma</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Kamma that produces rebirth</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Kamma according to time of result</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Kamma according to function</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Kamma and free choice</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Kamma and personal responsibility</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Misconceptions about Kamma</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Kamma is not fate</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Kamma and present behaviour</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Kamma and rebirth</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- G11 UNIT 3 -->
+<div class="unit glass">
+<div class="unit-header">
+<div class="unit-number">03</div>
+<div class="unit-title">
+<h3>Paṭicca Samuppāda — Dependent Origination <span class="priority">MASTER</span></h3>
+</div>
+<div class="unit-progress">0 / 15</div>
+<div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Meaning of Paṭicca Samuppāda</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Meaning of dependent arising</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Twelve links</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Avijjā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Saṅkhāra</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Viññāṇa</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Nāma-rūpa</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Saḷāyatana</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Phassa</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Vedanā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Taṇhā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Upādāna</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Bhava</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Jāti</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Jarā-maraṇa</label></div></li>
+</ul>
+<div class="notice glass" style="margin-top:20px;">
+<strong>Memory chain:</strong><br><br>
+Avijjā → Saṅkhāra → Viññāṇa → Nāma-rūpa →
+Saḷāyatana → Phassa → Vedanā → Taṇhā →
+Upādāna → Bhava → Jāti → Jarā-maraṇa
+</div>
+</div>
+</div>
+
+<!-- G11 UNIT 4 -->
+<div class="unit glass">
+<div class="unit-header">
+<div class="unit-number">04</div>
+<div class="unit-title">
+<h3>Fundamental Teachings of Buddhism — I <span class="priority">HIGH PRIORITY</span></h3>
+</div>
+<div class="unit-progress">0 / 16</div>
+<div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Four Noble Truths</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Dukkha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Dukkha Samudaya</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Dukkha Nirodha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Dukkha Nirodha Gāminī Paṭipadā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Noble Eightfold Path</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Right View</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Right Thought</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Right Speech</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Right Action</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Right Livelihood</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Right Effort</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Right Mindfulness</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Right Concentration</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Middle Path</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Application of the teachings</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- G11 UNIT 5 -->
+<div class="unit glass">
+<div class="unit-header">
+<div class="unit-number">05</div>
+<div class="unit-title">
+<h3>Fundamental Teachings of Buddhism — II <span class="priority">HIGH PRIORITY</span></h3>
+</div>
+<div class="unit-progress">0 / 14</div>
+<div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Three Characteristics</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Anicca</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Dukkha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Anattā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Five Aggregates</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Rūpa</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Vedanā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Saññā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Saṅkhāra</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Viññāṇa</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Six Sense Bases</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Nibbāna</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Lobha, Dosa and Moha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Middle Path</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- G11 UNIT 6 -->
+<div class="unit glass">
+<div class="unit-header">
+<div class="unit-number">06</div>
+<div class="unit-title">
+<h3>Buddhist Meditation <span class="priority">HIGH PRIORITY</span></h3>
+</div>
+<div class="unit-progress">0 / 11</div>
+<div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Meaning of Bhāvanā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Samatha meditation</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Vipassanā meditation</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Purpose of meditation</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Development of concentration</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Development of mindfulness</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Development of wisdom</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Benefits of meditation</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Obstacles to meditation</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Relationship between Samatha and Vipassanā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Mental discipline</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- G11 UNIT 7 -->
+<div class="unit glass">
+<div class="unit-header">
+<div class="unit-number">07</div>
+<div class="unit-title">
+<h3>Dhammapada <span class="priority">HIGH PRIORITY</span></h3>
+</div>
+<div class="unit-progress">0 / 15</div>
+<div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>What is the Dhammapada?</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Importance of the Dhammapada</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Major teachings</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Mind</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Conduct</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Good and evil</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Anger</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Hatred</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Wisdom</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Effort</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Self-discipline</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Friendship</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>The wise person</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>The fool</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Applying Dhammapada teachings to daily life</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- G11 UNIT 8 -->
+<div class="unit glass">
+<div class="unit-header">
+<div class="unit-number">08</div>
+<div class="unit-title">
+<h3>Sigālovāda Sutta <span class="priority">VERY IMPORTANT</span></h3>
+</div>
+<div class="unit-progress">0 / 17</div>
+<div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Background of Sigālaka</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Advice given by the Buddha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Six directions</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Meaning of the six directions</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Parents</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Children</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Teachers</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Students</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Friends</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Employers</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Employees</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Religious persons</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Responsibilities in relationships</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Duties of children towards parents</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Duties of parents towards children</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Duties of students towards teachers</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Duties of friends, employers and employees</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- G11 UNIT 9 -->
+<div class="unit glass">
+<div class="unit-header">
+<div class="unit-number">09</div>
+<div class="unit-title">
+<h3>Buddha and the Environment</h3>
+</div>
+<div class="unit-progress">0 / 9</div>
+<div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Buddhist attitude towards nature</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Respect for living beings</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Environmental responsibility</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Causes of environmental destruction</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Human responsibility</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Sustainable living</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Non-harming</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Compassion towards living beings</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Applying Buddhist principles to environmental problems</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- G11 UNIT 10 -->
+<div class="unit glass">
+<div class="unit-header">
+<div class="unit-number">10</div>
+<div class="unit-title">
+<h3>Buddhist Councils / Saṅgāyanā</h3>
+</div>
+<div class="unit-progress">0 / 10</div>
+<div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>First Council</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Second Council</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Third Council</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Fourth Council</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Reasons for councils</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Important monks</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Locations</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Kings / patrons</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Results</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Importance in preserving Dhamma</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- G11 UNIT 11 -->
+<div class="unit glass">
+<div class="unit-header">
+<div class="unit-number">11</div>
+<div class="unit-title">
+<h3>Buddhist Identity & Coexistence</h3>
+</div>
+<div class="unit-progress">0 / 10</div>
+<div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Buddhist identity</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Buddhist values</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Living according to Dhamma</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Respect for other religions</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Religious coexistence</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Tolerance</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Compassion</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Respect</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Peaceful society</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Avoiding religious conflict</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- G11 UNIT 12 -->
+<div class="unit glass">
+<div class="unit-header">
+<div class="unit-number">12</div>
+<div class="unit-title">
+<h3>Correct Food Consumption</h3>
+</div>
+<div class="unit-progress">0 / 8</div>
+<div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Buddhist attitude towards food</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Moderation</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Mindful eating</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Avoiding excess</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Healthy lifestyle</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Food and physical wellbeing</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Food and mental wellbeing</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Responsible consumption</label></div></li>
+</ul>
+</div>
+</div>
+
+<!-- G11 UNIT 13 -->
+<div class="unit glass">
+<div class="unit-header">
+<div class="unit-number">13</div>
+<div class="unit-title">
+<h3>Being Good Among Difficult People</h3>
+</div>
+<div class="unit-progress">0 / 11</div>
+<div class="arrow">⌄</div>
+</div>
+<div class="unit-body">
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>Patience</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Mettā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Karuṇā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Muditā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Upekkhā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Controlling anger</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Forgiveness</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Understanding others</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Right speech</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Avoiding revenge</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Handling conflict according to Dhamma</label></div></li>
+</ul>
+</div>
+</div>
+
+
+<!-- ========================================================= -->
+<!-- CORE KNOWLEDGE -->
+<!-- ========================================================= -->
+
+<div class="core-section">
+
+<div class="grade-title">
+<div class="grade-number">★</div>
+<div>
+<h2>O/L Core Knowledge</h2>
+<p>Final revision topics you should know without the textbook.</p>
+</div>
+</div>
+
+<div class="core-card glass">
+<h3>🧘 Buddha</h3>
+<ul class="checklist core-list">
+<li><div class="check-item"><input type="checkbox"><label>Birth</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Childhood</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Four Sights</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Great Renunciation</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Enlightenment</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>First Sermon</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Major events</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Parinibbāna</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Qualities of the Buddha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Major disciples</label></div></li>
+</ul>
+</div>
+
+<div class="core-card glass">
+<h3>📖 Dhamma</h3>
+<ul class="checklist core-list">
+<li><div class="check-item"><input type="checkbox"><label>Four Noble Truths</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Noble Eightfold Path</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Three Characteristics</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Five Aggregates</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Paṭicca Samuppāda</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Kamma</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Rebirth</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Nibbāna</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Middle Path</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Five Precepts</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Kusala / Akusala</label></div></li>
+</ul>
+</div>
+
+<div class="core-card glass">
+<h3>🙏 Buddhist Practice</h3>
+<ul class="checklist core-list">
+<li><div class="check-item"><input type="checkbox"><label>Dāna</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Sīla</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Bhāvanā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Samatha</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Vipassanā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Mettā</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Compassion</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Mindfulness</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Merit</label></div></li>
+</ul>
+</div>
+
+<div class="core-card glass">
+<h3>🏛️ History</h3>
+<ul class="checklist core-list">
+<li><div class="check-item"><input type="checkbox"><label>Buddhist Councils</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Important Buddhist kings</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Important monks</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Spread of Buddhism</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Sri Lankan Buddhist heritage</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Buddhist art</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Important places</label></div></li>
+</ul>
+</div>
+
+<div class="core-card glass">
+<h3>🌏 Social & Practical Buddhism</h3>
+<ul class="checklist core-list">
+<li><div class="check-item"><input type="checkbox"><label>Sigālovāda Sutta</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Family responsibilities</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Teacher / student responsibilities</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Friendship</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Environment</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Food</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Coexistence</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Buddhist identity</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>Dealing with difficult people</label></div></li>
+</ul>
+</div>
+
+</div>
+
+<!-- ========================================================= -->
+<!-- FINAL O/L TEST -->
+<!-- ========================================================= -->
+
+<section class="final-test">
+<h2>🏆 FINAL O/L MASTER TEST</h2>
+<p style="color:#94a3b8; margin-bottom:30px; font-weight: 500;">
+Tick these only when you can genuinely do them without depending on your textbook.
+</p>
+
+<h3>Level 1 — KNOW</h3>
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>I can define the term.</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>I know the Pāli word.</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>I know the important names.</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>I know the important places.</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>I know the important events.</label></div></li>
+</ul>
+
+<h3 style="margin-top:35px;">Level 2 — UNDERSTAND</h3>
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>I can explain the concept in my own words.</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>I can give an example.</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>I can distinguish similar concepts.</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>I can explain cause and effect.</label></div></li>
+</ul>
+
+<h3 style="margin-top:35px;">Level 3 — EXAM READY</h3>
+<ul class="checklist">
+<li><div class="check-item"><input type="checkbox"><label>I can answer MCQs.</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>I can answer short questions.</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>I can answer structured questions.</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>I can explain a Dhamma teaching with an example.</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>I can connect teachings to real-life situations.</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>I can remember important lists without the textbook.</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>I can complete past-paper questions.</label></div></li>
+<li><div class="check-item"><input type="checkbox"><label>I can explain why an answer is correct.</label></div></li>
+</ul>
+</section>
+
+<footer>
+    <strong>Buddhism O/L Master Checklist</strong><br>
+    Grade 10 + Grade 11 • Study • Revise • Practise • Master
+</footer>
+
+</div>
+
+<script>
+const STORAGE_KEY = "buddhism_ol_master_checklist_v1";
+
+function saveProgress() {
+    const checks = [...document.querySelectorAll('input[type="checkbox"]')];
+    const data = checks.map((check, index) => ({ index: index, checked: check.checked }));
+    localStorage.setItem(STORAGE_KEY, JSON.stringify(data));
+}
+
+function loadProgress() {
+    const saved = localStorage.getItem(STORAGE_KEY);
+    if (!saved) return;
+    try {
+        const data = JSON.parse(saved);
+        const checks = document.querySelectorAll('input[type="checkbox"]');
+        data.forEach(item => {
+            if (checks[item.index]) {
+                checks[item.index].checked = item.checked;
+            }
+        });
+    } catch (error) {
+        console.error("Could not load saved progress.");
+    }
+}
+
+document.querySelectorAll(".unit-header").forEach(header => {
+    header.addEventListener("click", () => {
+        header.parentElement.classList.toggle("open");
+    });
+});
+
+function expandAll() {
+    document.querySelectorAll(".unit").forEach(unit => { unit.classList.add("open"); });
+}
+
+function collapseAll() {
+    document.querySelectorAll(".unit").forEach(unit => { unit.classList.remove("open"); });
+}
+
+function updateProgress() {
+    const checks = [...document.querySelectorAll('input[type="checkbox"]')];
+    const completed = checks.filter(check => check.checked).length;
+    const total = checks.length;
+    const remaining = total - completed;
+    const percent = total === 0 ? 0 : Math.round((completed / total) * 100);
+
+    document.getElementById("completedCount").textContent = completed;
+    document.getElementById("remainingCount").textContent = remaining;
+    document.getElementById("overallPercent").textContent = percent + "%";
+    document.getElementById("overallBar").style.width = percent + "%";
+
+    document.querySelectorAll(".unit").forEach(unit => {
+        const unitChecks = [...unit.querySelectorAll('input[type="checkbox"]')];
+        const unitCompleted = unitChecks.filter(check => check.checked).length;
+        const progress = unit.querySelector(".unit-progress");
+        if (progress) {
+            progress.textContent = `${unitCompleted} / ${unitChecks.length}`;
+        }
+    });
+}
+
+document.querySelectorAll('input[type="checkbox"]').forEach(check => {
+    check.addEventListener("change", () => {
+        saveProgress();
+        updateProgress();
+    });
+});
+
+const searchBox = document.getElementById("searchBox");
+searchBox.addEventListener("input", filterContent);
+
+function filterContent() {
+    const query = searchBox.value.toLowerCase().trim();
+    const activeFilter = document.querySelector(".filter-btn.active").dataset.filter;
+
+    document.querySelectorAll(".unit").forEach(unit => {
+        let visibleItems = 0;
+        unit.querySelectorAll(".check-item").forEach(item => {
+            const text = item.textContent.toLowerCase();
+            const checkbox = item.querySelector("input");
+            const matchesSearch = !query || text.includes(query);
+            let matchesFilter = true;
+
+            if (activeFilter === "completed") matchesFilter = checkbox.checked;
+            if (activeFilter === "remaining") matchesFilter = !checkbox.checked;
+
+            if (matchesSearch && matchesFilter) {
+                item.parentElement.style.display = "";
+                visibleItems++;
+            } else {
+                item.parentElement.style.display = "none";
+            }
+        });
+
+        unit.style.display = visibleItems > 0 ? "" : "none";
+        if (query) unit.classList.add("open");
+    });
+}
+
+document.querySelectorAll(".filter-btn").forEach(button => {
+    button.addEventListener("click", () => {
+        document.querySelectorAll(".filter-btn").forEach(btn => btn.classList.remove("active"));
+        button.classList.add("active");
+        filterContent();
+    });
+});
+
+function resetProgress() {
+    if (!confirm("Reset ALL Buddhism O/L checklist progress?")) return;
+    document.querySelectorAll('input[type="checkbox"]').forEach(check => { check.checked = false; });
+    localStorage.removeItem(STORAGE_KEY);
+    updateProgress();
+    filterContent();
+}
+
+loadProgress();
+updateProgress();
+
+</script>
+</body>
+</html>
