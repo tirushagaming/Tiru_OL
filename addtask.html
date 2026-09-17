@@ -1,0 +1,746 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+    <title>Task Manager with Subtasks & Durations</title>
+    <style>
+        :root {
+            /* Brilliant & Official Color Palette */
+            --primary: #2563EB; /* Vibrant Azure Blue */
+            --primary-hover: #1D4ED8;
+            --success: #059669; /* Deep Emerald */
+            --danger: #DC2626;  /* Official Red */
+            --bg-color: #F8FAFC; /* Soft Ice Blue for focus */
+            --sidebar-bg: #0F172A; /* Deep Navy Blue */
+            --card-bg: #FFFFFF;
+            --text-light: #F8FAFC;
+            --text-dark: #1E293B;
+            --border-color: #E2E8F0;
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;
+        }
+
+        body {
+            background-color: var(--bg-color);
+            display: flex;
+            height: 100vh;
+            color: var(--text-dark);
+            overflow: hidden; /* Prevents whole-page bouncing on mobile */
+        }
+
+        /* Prevent iOS Safari from zooming in on input focus by ensuring 16px minimum */
+        input[type="text"], input[type="number"] {
+            font-size: 16px !important; 
+        }
+
+        /* Sidebar / Categories */
+        .sidebar {
+            width: 320px;
+            background-color: var(--sidebar-bg);
+            color: var(--text-light);
+            display: flex;
+            flex-direction: column;
+            padding: 24px;
+            box-shadow: 4px 0 15px rgba(0,0,0,0.1);
+            z-index: 10;
+        }
+
+        .sidebar h2 {
+            margin-bottom: 20px;
+            font-size: 1.5rem;
+            color: var(--text-light);
+            font-weight: 600;
+            letter-spacing: 0.5px;
+        }
+
+        .category-list {
+            list-style: none;
+            flex-grow: 1;
+            overflow-y: auto;
+        }
+
+        /* Custom Scrollbar for Sidebar */
+        .category-list::-webkit-scrollbar { width: 6px; height: 6px; }
+        .category-list::-webkit-scrollbar-thumb { background: rgba(255,255,255,0.2); border-radius: 10px; }
+
+        .category-item {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 12px 16px;
+            margin-bottom: 8px;
+            background-color: rgba(255, 255, 255, 0.05);
+            border-radius: 8px;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            border: 1px solid transparent;
+        }
+
+        .category-item:hover {
+            background-color: rgba(255, 255, 255, 0.1);
+        }
+
+        .category-item.active {
+            background-color: var(--primary);
+            border-color: rgba(255,255,255,0.2);
+            box-shadow: 0 4px 10px rgba(37, 99, 235, 0.3);
+        }
+
+        .category-item span {
+            flex-grow: 1;
+            font-weight: 500;
+        }
+
+        .rename-btn {
+            background: transparent;
+            border: 1px solid rgba(255,255,255,0.3);
+            color: #E2E8F0;
+            cursor: pointer;
+            font-size: 0.75rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            transition: all 0.2s ease;
+        }
+        
+        .rename-btn:hover {
+            background-color: rgba(255, 255, 255, 0.2);
+            color: white;
+        }
+
+        .add-category-box {
+            display: flex;
+            margin-top: 15px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.2);
+            border-radius: 6px;
+        }
+
+        .add-category-box input {
+            flex-grow: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 6px 0 0 6px;
+            outline: none;
+            background: rgba(255,255,255,0.9);
+        }
+
+        .add-category-box button {
+            padding: 12px 16px;
+            border: none;
+            background-color: var(--primary);
+            color: white;
+            cursor: pointer;
+            border-radius: 0 6px 6px 0;
+            font-weight: bold;
+            transition: background 0.2s;
+        }
+        
+        .add-category-box button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Main Content / Tasks */
+        .main-content {
+            flex-grow: 1;
+            padding: 40px;
+            display: flex;
+            flex-direction: column;
+            overflow-y: auto;
+        }
+
+        .main-header {
+            margin-bottom: 25px;
+        }
+
+        .main-header h1 {
+            font-size: 2.2rem;
+            color: var(--text-dark);
+            font-weight: 700;
+        }
+
+        .add-task-box {
+            display: flex;
+            margin-bottom: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-radius: 8px;
+        }
+
+        .add-task-box input {
+            flex-grow: 1;
+            padding: 16px;
+            border: 1px solid var(--border-color);
+            border-right: none;
+            border-radius: 8px 0 0 8px;
+            outline: none;
+        }
+
+        .add-task-box input:focus {
+            border-color: var(--primary);
+            box-shadow: inset 0 0 0 1px var(--primary);
+        }
+
+        .add-task-box button {
+            padding: 16px 28px;
+            border: none;
+            background-color: var(--primary);
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            border-radius: 0 8px 8px 0;
+            transition: background 0.2s;
+        }
+
+        .add-task-box button:hover {
+            background-color: var(--primary-hover);
+        }
+
+        /* Task Cards */
+        .task-list {
+            list-style: none;
+            padding-bottom: 40px;
+        }
+
+        .task-card {
+            background: var(--card-bg);
+            padding: 20px;
+            margin-bottom: 16px;
+            border-radius: 10px;
+            box-shadow: 0 4px 6px rgba(0,0,0,0.02), 0 1px 3px rgba(0,0,0,0.05);
+            border: 1px solid var(--border-color);
+            display: flex;
+            flex-direction: column;
+        }
+
+        .task-row, .subtask-row {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            gap: 15px;
+        }
+
+        /* Containers for wrapping on mobile */
+        .task-info, .subtask-info {
+            display: flex;
+            align-items: center;
+            flex-grow: 1;
+            gap: 12px;
+            min-width: 0; /* allows text truncation/wrapping */
+        }
+
+        .task-actions, .subtask-actions {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            flex-shrink: 0;
+        }
+
+        /* Subtasks Area */
+        .subtasks-container {
+            margin-left: 32px;
+            margin-top: 15px;
+            padding-left: 15px;
+            border-left: 3px solid #E2E8F0;
+            list-style: none;
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+        }
+
+        .subtask-row {
+            background: #F8FAFC;
+            padding: 10px 15px;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+        }
+
+        /* Shared Task/Subtask Elements */
+        input[type="checkbox"] {
+            width: 20px;
+            height: 20px;
+            cursor: pointer;
+            accent-color: var(--primary);
+            flex-shrink: 0;
+        }
+
+        .task-text {
+            font-size: 1.15rem;
+            font-weight: 600;
+            color: var(--text-dark);
+            word-break: break-word;
+            transition: color 0.2s;
+        }
+
+        .subtask-text {
+            font-size: 0.95rem;
+            color: #475569;
+            word-break: break-word;
+            transition: color 0.2s;
+        }
+
+        .completed .task-text, .completed .subtask-text {
+            text-decoration: line-through;
+            color: #94A3B8;
+        }
+        
+        .duration-wrapper {
+            display: flex;
+            align-items: center;
+            background: #F1F5F9;
+            border-radius: 6px;
+            border: 1px solid var(--border-color);
+            padding: 0 8px;
+        }
+
+        .duration-input {
+            width: 45px;
+            padding: 8px 0;
+            border: none;
+            background: transparent;
+            text-align: right;
+            outline: none;
+            font-weight: 700;
+            color: var(--primary);
+        }
+        
+        .duration-label {
+            font-size: 0.8rem;
+            color: #64748B;
+            margin-left: 6px;
+            font-weight: 500;
+        }
+
+        /* Buttons */
+        .btn {
+            border: none;
+            padding: 8px 14px;
+            border-radius: 6px;
+            cursor: pointer;
+            font-size: 0.85rem;
+            font-weight: 600;
+            transition: all 0.2s;
+        }
+
+        .btn-subtask {
+            background: var(--success);
+            color: white;
+        }
+        .btn-subtask:hover { background: #047857; }
+
+        .btn-delete {
+            background: #FEE2E2;
+            color: var(--danger);
+        }
+        .btn-delete:hover { background: var(--danger); color: white; }
+        
+        .btn-delete-sub {
+            background: transparent;
+            color: #94A3B8;
+            padding: 6px 10px;
+        }
+        .btn-delete-sub:hover { background: #FEE2E2; color: var(--danger); }
+
+
+        /* =========================================
+           MOBILE & TABLET RESPONSIVENESS
+           ========================================= */
+        @media (max-width: 768px) {
+            body {
+                flex-direction: column;
+                overflow-y: auto; /* Re-enable scroll for mobile body */
+            }
+
+            .sidebar {
+                width: 100%;
+                height: auto;
+                padding: 15px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+                z-index: 20;
+            }
+
+            .sidebar h2 {
+                font-size: 1.2rem;
+                margin-bottom: 15px;
+            }
+
+            /* Turn categories into a horizontal scrollable row on mobile */
+            .category-list {
+                display: flex;
+                flex-direction: row;
+                overflow-x: auto;
+                padding-bottom: 5px;
+            }
+
+            .category-item {
+                margin-bottom: 0;
+                margin-right: 10px;
+                flex: 0 0 auto; /* Prevent shrinking */
+                white-space: nowrap; /* Keep text on one line */
+            }
+
+            .main-content {
+                padding: 20px 15px;
+                overflow-y: visible;
+            }
+
+            .main-header h1 {
+                font-size: 1.5rem;
+            }
+
+            /* Adjust Add Task Input for mobile */
+            .add-task-box button {
+                padding: 16px 15px;
+            }
+
+            /* Stack task content vertically on small screens (iPhone 7 etc) */
+            .task-row, .subtask-row {
+                flex-direction: column;
+                align-items: flex-start;
+                gap: 12px;
+            }
+
+            .task-info, .subtask-info {
+                width: 100%;
+            }
+
+            /* Push buttons to the right or full width */
+            .task-actions, .subtask-actions {
+                width: 100%;
+                justify-content: flex-end;
+                flex-wrap: wrap; /* Allow buttons to wrap if screen is very tiny */
+            }
+
+            /* Ensure duration wrapper stays attached neatly */
+            .duration-wrapper {
+                margin-right: auto; /* Pushes other buttons to the right */
+            }
+
+            .subtasks-container {
+                margin-left: 10px;
+                padding-left: 10px;
+                border-left-width: 4px;
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Sidebar for Categories -->
+    <div class="sidebar">
+        <h2>Study & Duty Categories</h2>
+        <ul class="category-list" id="categoryList"></ul>
+        <div class="add-category-box">
+            <input type="text" id="newCategoryInput" placeholder="New category...">
+            <button onclick="addCategory()">Add</button>
+        </div>
+    </div>
+
+    <!-- Main Content for Tasks -->
+    <div class="main-content">
+        <div class="main-header">
+            <h1 id="currentCategoryTitle">Select a Category</h1>
+        </div>
+        
+        <div class="add-task-box">
+            <input type="text" id="newTaskInput" placeholder="Add a new main task (e.g. Science Homework)...">
+            <button onclick="addTask()">Add Task</button>
+        </div>
+
+        <ul class="task-list" id="taskList"></ul>
+    </div>
+
+    <script>
+        // Default data just in case it's the user's first time opening the app
+        let defaultCategories = [
+            { 
+                id: 'cat-1', 
+                name: 'Prefect Duties', 
+                tasks: [
+                    { 
+                        id: 'task-1', 
+                        text: 'Morning Assembly prep', 
+                        duration: '20', 
+                        completed: false, 
+                        subtasks: [
+                            { id: 'sub-1', text: 'Set up microphone', duration: '5', completed: false }
+                        ] 
+                    }
+                ] 
+            },
+            { 
+                id: 'cat-2', 
+                name: 'Homework', 
+                tasks: [] 
+            }
+        ];
+
+        let categories = [];
+        let activeCategoryId = null; 
+
+        // --- SAVE AND LOAD FUNCTIONS ---
+        function saveData() {
+            localStorage.setItem('prefectTaskManagerData', JSON.stringify(categories));
+        }
+
+        function loadData() {
+            const savedData = localStorage.getItem('prefectTaskManagerData');
+            if (savedData) {
+                categories = JSON.parse(savedData); 
+            } else {
+                categories = defaultCategories; 
+            }
+            if (categories.length > 0) {
+                activeCategoryId = categories[0].id;
+            }
+        }
+
+        // Helper to prevent HTML injection
+        function escapeHTML(str) {
+            return str.replace(/[&<>'"]/g, tag => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', "'": '&#39;', '"': '&quot;' }[tag]));
+        }
+
+        // --- RENDER FUNCTIONS ---
+        function renderCategories() {
+            const list = document.getElementById('categoryList');
+            list.innerHTML = ''; 
+
+            categories.forEach(category => {
+                const li = document.createElement('li');
+                li.className = `category-item ${category.id === activeCategoryId ? 'active' : ''}`;
+                
+                const span = document.createElement('span');
+                span.textContent = category.name;
+                span.onclick = () => setActiveCategory(category.id);
+
+                const renameBtn = document.createElement('button');
+                renameBtn.className = 'rename-btn';
+                renameBtn.textContent = 'Edit';
+                renameBtn.onclick = (e) => {
+                    e.stopPropagation();
+                    renameCategory(category.id);
+                };
+
+                li.appendChild(span);
+                li.appendChild(renameBtn);
+                list.appendChild(li);
+            });
+
+            updateMainHeader();
+        }
+
+        function renderTasks() {
+            const list = document.getElementById('taskList');
+            const activeCategory = categories.find(c => c.id === activeCategoryId);
+            
+            if (!activeCategory) {
+                list.innerHTML = '';
+                return;
+            }
+
+            let html = '';
+            activeCategory.tasks.forEach(task => {
+                html += `
+                    <li class="task-card">
+                        <div class="task-row ${task.completed ? 'completed' : ''}">
+                            <div class="task-info">
+                                <input type="checkbox" ${task.completed ? 'checked' : ''} onchange="toggleTask('${task.id}')">
+                                <span class="task-text">${escapeHTML(task.text)}</span>
+                            </div>
+                            
+                            <div class="task-actions">
+                                <div class="duration-wrapper" title="Estimated Time">
+                                    <input type="number" class="duration-input" value="${task.duration || ''}" placeholder="0" onchange="updateDuration('${task.id}', null, this.value)">
+                                    <span class="duration-label">min</span>
+                                </div>
+                                <button class="btn btn-subtask" onclick="addSubtaskPrompt('${task.id}')">+ Subtask</button>
+                                <button class="btn btn-delete" onclick="deleteTask('${task.id}')">Delete</button>
+                            </div>
+                        </div>
+                        
+                        ${task.subtasks.length > 0 ? `
+                        <ul class="subtasks-container">
+                            ${task.subtasks.map(sub => `
+                                <li class="subtask-row ${sub.completed ? 'completed' : ''}">
+                                    <div class="subtask-info">
+                                        <input type="checkbox" ${sub.completed ? 'checked' : ''} onchange="toggleSubtask('${task.id}', '${sub.id}')">
+                                        <span class="subtask-text">${escapeHTML(sub.text)}</span>
+                                    </div>
+                                    
+                                    <div class="subtask-actions">
+                                        <div class="duration-wrapper">
+                                            <input type="number" class="duration-input" value="${sub.duration || ''}" placeholder="0" onchange="updateDuration('${task.id}', '${sub.id}', this.value)">
+                                            <span class="duration-label">min</span>
+                                        </div>
+                                        <button class="btn btn-delete-sub" onclick="deleteSubtask('${task.id}', '${sub.id}')">✕</button>
+                                    </div>
+                                </li>
+                            `).join('')}
+                        </ul>
+                        ` : ''}
+                    </li>
+                `;
+            });
+            
+            list.innerHTML = html;
+        }
+
+        function updateMainHeader() {
+            const activeCategory = categories.find(c => c.id === activeCategoryId);
+            const titleElement = document.getElementById('currentCategoryTitle');
+            
+            if (activeCategory) {
+                titleElement.textContent = activeCategory.name;
+                document.getElementById('newTaskInput').disabled = false;
+            } else {
+                titleElement.textContent = "Create or Select a Category";
+                document.getElementById('newTaskInput').disabled = true;
+            }
+        }
+
+        // --- ACTIONS ---
+        function setActiveCategory(id) {
+            activeCategoryId = id;
+            renderCategories();
+            renderTasks();
+        }
+
+        function addCategory() {
+            const input = document.getElementById('newCategoryInput');
+            const name = input.value.trim();
+            if (name) {
+                const newCategory = { id: 'cat-' + Date.now(), name: name, tasks: [] };
+                categories.push(newCategory);
+                input.value = ''; 
+                setActiveCategory(newCategory.id);
+                saveData(); 
+            }
+        }
+
+        function renameCategory(id) {
+            const category = categories.find(c => c.id === id);
+            if (category) {
+                const newName = prompt(`Enter a new name for "${category.name}":`, category.name);
+                if (newName !== null && newName.trim() !== '') {
+                    category.name = newName.trim();
+                    renderCategories();
+                    updateMainHeader();
+                    saveData(); 
+                }
+            }
+        }
+
+        function addTask() {
+            const input = document.getElementById('newTaskInput');
+            const text = input.value.trim();
+            const activeCategory = categories.find(c => c.id === activeCategoryId);
+
+            if (text && activeCategory) {
+                activeCategory.tasks.unshift({
+                    id: 'task-' + Date.now(),
+                    text: text,
+                    duration: '',
+                    completed: false,
+                    subtasks: []
+                });
+                input.value = '';
+                renderTasks();
+                saveData(); 
+            }
+        }
+
+        function addSubtaskPrompt(taskId) {
+            const text = prompt("Enter subtask description:");
+            if (text && text.trim() !== '') {
+                const activeCategory = categories.find(c => c.id === activeCategoryId);
+                const task = activeCategory.tasks.find(t => t.id === taskId);
+                
+                if (task) {
+                    task.subtasks.push({
+                        id: 'sub-' + Date.now(),
+                        text: text.trim(),
+                        duration: '',
+                        completed: false
+                    });
+                    renderTasks();
+                    saveData(); 
+                }
+            }
+        }
+
+        function toggleTask(taskId) {
+            const activeCategory = categories.find(c => c.id === activeCategoryId);
+            const task = activeCategory.tasks.find(t => t.id === taskId);
+            if (task) {
+                task.completed = !task.completed;
+                task.subtasks.forEach(sub => sub.completed = task.completed);
+                renderTasks();
+                saveData(); 
+            }
+        }
+
+        function toggleSubtask(taskId, subtaskId) {
+            const activeCategory = categories.find(c => c.id === activeCategoryId);
+            const task = activeCategory.tasks.find(t => t.id === taskId);
+            if (task) {
+                const sub = task.subtasks.find(s => s.id === subtaskId);
+                if (sub) {
+                    sub.completed = !sub.completed;
+                    const allSubsCompleted = task.subtasks.every(s => s.completed);
+                    task.completed = allSubsCompleted && task.subtasks.length > 0;
+                    renderTasks();
+                    saveData(); 
+                }
+            }
+        }
+
+        function updateDuration(taskId, subtaskId, newDuration) {
+            const activeCategory = categories.find(c => c.id === activeCategoryId);
+            const task = activeCategory.tasks.find(t => t.id === taskId);
+            
+            if (task) {
+                if (subtaskId) {
+                    const sub = task.subtasks.find(s => s.id === subtaskId);
+                    if (sub) sub.duration = newDuration;
+                } else {
+                    task.duration = newDuration;
+                }
+                saveData(); 
+            }
+        }
+
+        function deleteTask(taskId) {
+            const activeCategory = categories.find(c => c.id === activeCategoryId);
+            activeCategory.tasks = activeCategory.tasks.filter(t => t.id !== taskId);
+            renderTasks();
+            saveData(); 
+        }
+
+        function deleteSubtask(taskId, subtaskId) {
+            const activeCategory = categories.find(c => c.id === activeCategoryId);
+            const task = activeCategory.tasks.find(t => t.id === taskId);
+            if (task) {
+                task.subtasks = task.subtasks.filter(s => s.id !== subtaskId);
+                renderTasks();
+                saveData(); 
+            }
+        }
+
+        // Event listeners for Enter key
+        document.getElementById('newCategoryInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') addCategory();
+        });
+        document.getElementById('newTaskInput').addEventListener('keypress', function (e) {
+            if (e.key === 'Enter') addTask();
+        });
+
+        // Init App
+        loadData();
+        renderCategories();
+        renderTasks();
+    </script>
+</body>
+</html>
